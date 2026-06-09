@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>なぜあなたは今、稼げていないのか？ ｜ note収益化 50問診断</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF7A1A;
+    --orange-soft:#FFE7D4;
+    --purple:#7C3AED;
+    --purple-soft:#EDE4FF;
+    --ink:#241B2E;
+    --gray:#6B6477;
+    --line:#EAE6F0;
+    --bg:#FBF9FF;
+    --white:#ffffff;
+    --good:#16A34A;
+    --warn:#F59E0B;
+    --bad:#EF4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Noto Sans JP',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 100% -10%,var(--purple-soft),transparent 60%),
+      radial-gradient(1000px 500px at -10% 0%,var(--orange-soft),transparent 55%),
+      var(--bg);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:24px 18px 80px}
+  .brandbar{height:6px;border-radius:99px;background:linear-gradient(90deg,var(--orange),var(--purple));margin-bottom:22px}
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--purple);background:var(--purple-soft);padding:6px 12px;border-radius:99px;margin-bottom:14px}
+  h1{font-size:26px;font-weight:900;line-height:1.45;letter-spacing:.01em}
+  h1 .hl{color:var(--orange)}
+  .lead{color:var(--gray);font-size:15px;margin-top:12px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 30px rgba(124,58,237,.06);margin-top:18px}
+  .note-small{font-size:12.5px;color:var(--gray)}
+  .privacy{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--gray);margin-top:18px;justify-content:center}
+  .dot{width:7px;height:7px;border-radius:99px;background:var(--good);display:inline-block}
+
+  .btn{appearance:none;border:none;cursor:pointer;font-family:inherit;font-weight:700;border-radius:14px;transition:.15s;font-size:16px}
+  .btn-primary{background:linear-gradient(90deg,var(--orange),#FF9A4D);color:#fff;padding:16px 22px;width:100%;box-shadow:0 8px 20px rgba(255,122,26,.28)}
+  .btn-primary:hover{transform:translateY(-1px)}
+  .btn-purple{background:linear-gradient(90deg,var(--purple),#9560F4);color:#fff;padding:16px 22px;width:100%;box-shadow:0 8px 20px rgba(124,58,237,.25)}
+  .btn-ghost{background:#fff;color:var(--purple);border:1.5px solid var(--purple);padding:13px 18px}
+  .btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .btn-row .btn{flex:1;min-width:140px}
+
+  /* progress */
+  .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:8px 0 4px}
+  .prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--purple));width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--gray)}
+  .qdomain{font-size:12.5px;font-weight:700;color:var(--purple);margin-top:14px}
+  .qtext{font-size:19px;font-weight:700;line-height:1.5;margin:6px 0 18px}
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:10px;cursor:pointer;font-family:inherit;font-size:15.5px;font-weight:500;transition:.12s}
+  .opt:hover{border-color:var(--orange);background:#FFF7F1}
+  .opt b{display:inline-block;width:24px;color:var(--orange);font-weight:900}
+  .backlink{display:inline-block;margin-top:16px;color:var(--gray);font-size:13px;text-decoration:none;border-bottom:1px dashed var(--line)}
+
+  /* result */
+  .scorebig{font-size:64px;font-weight:900;line-height:1;background:linear-gradient(90deg,var(--orange),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .scoresub{font-size:13px;color:var(--gray)}
+  .verdict{background:linear-gradient(135deg,#2A1736,#3A1E4D);color:#fff;border-radius:18px;padding:22px;margin-top:18px}
+  .verdict .tag{font-size:12px;font-weight:700;color:#FFB37A;letter-spacing:.06em}
+  .verdict h2{font-size:22px;font-weight:900;margin:6px 0 10px;line-height:1.4}
+  .verdict h2 em{font-style:normal;color:#FF9A4D}
+  .verdict p{font-size:14.5px;color:#E6DCF0}
+
+  .bars{margin-top:8px}
+  .bar{margin:13px 0}
+  .bar .top{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:5px}
+  .bar .top .pct{color:var(--gray);font-weight:700}
+  .track{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
+  .track>i{display:block;height:100%;border-radius:99px;transition:width .6s ease}
+  .lowmark{font-size:11px;font-weight:700;color:#fff;background:var(--bad);padding:1px 7px;border-radius:99px;margin-left:6px}
+
+  .rx{border-left:4px solid var(--orange);background:#FFF7F1;border-radius:10px;padding:14px 16px;margin-top:12px}
+  .rx h3{font-size:14px;color:var(--orange)}
+  .rx p{font-size:13.5px;color:var(--ink);margin-top:4px}
+
+  .verdict .step{margin-top:14px;background:rgba(255,255,255,.1);border-radius:12px;padding:12px 14px}
+  .verdict .step b{color:#FFB37A;font-size:12px;letter-spacing:.04em}
+  .verdict .step p{color:#fff;font-size:14px;margin-top:3px}
+
+  .strength{border-left:4px solid var(--good);background:#F0FBF3;border-radius:10px;padding:14px 16px}
+  .strength h3{font-size:14px;color:var(--good)}
+  .strength p{font-size:13.5px;margin-top:4px}
+
+  .btag{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+  .btag.high{background:#DCFCE7;color:#15803D}
+  .btag.mid{background:#FEF3C7;color:#B45309}
+  .btag.low{background:#FEE2E2;color:#B91C1C}
+
+  .rep{padding:14px 0;border-bottom:1px solid var(--line)}
+  .rep:last-child{border-bottom:none}
+  .rep .rh{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14.5px}
+  .rep .rh .rpct{color:var(--gray)}
+  .rep .rdesc{font-size:12px;color:var(--gray);margin-top:2px}
+  .rep .rread{font-size:13.5px;margin-top:7px;line-height:1.65}
+
+  /* part2 */
+  .qcard label{display:block;font-weight:700;font-size:15.5px;margin-top:18px}
+  .qcard .hint{font-size:12.5px;color:var(--gray);margin:3px 0 8px}
+  textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px;font-family:inherit;font-size:15px;line-height:1.6;resize:vertical;min-height:74px;background:#fff}
+  textarea:focus{outline:none;border-color:var(--purple)}
+
+  .ta-wrap{position:relative}
+  .ta-wrap textarea{padding-right:54px}
+  .micbtn{position:absolute;top:9px;right:9px;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--purple);background:#fff;color:var(--purple);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;line-height:1}
+  .micbtn:hover{background:var(--purple-soft)}
+  .micbtn.rec{background:var(--bad);border-color:var(--bad);color:#fff;animation:micpulse 1.1s infinite}
+  @keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}70%{box-shadow:0 0 0 9px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+
+  .voicebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 2px}
+  .voicebar .btn{flex:0 0 auto;width:auto;padding:13px 20px;font-size:15px}
+  .guidebar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#2A1736;color:#fff;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -6px 24px rgba(0,0,0,.25)}
+  .guidebar .gl{font-size:13.5px;font-weight:700;flex:1;min-width:0}
+  .guidebar .gl small{display:block;font-weight:400;color:#C9B8DC;font-size:11.5px}
+  .guidebar .gbtns{display:flex;gap:8px;flex:0 0 auto}
+  .guidebar button{font-family:inherit;font-weight:700;border:none;border-radius:10px;padding:11px 14px;cursor:pointer;font-size:14px}
+  .gb-next{background:var(--orange);color:#fff}
+  .gb-stop{background:transparent;color:#fff;border:1.5px solid #6B5680}
+
+  .infocard{border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:12px;background:#fff;position:relative}
+  .infocard .k{font-size:12px;font-weight:700;color:var(--purple);letter-spacing:.04em}
+  .infocard .v{font-size:15px;white-space:pre-wrap;margin-top:6px}
+  .infocard .tip{font-size:12px;color:var(--gray);margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+  .copybtn{position:absolute;top:12px;right:12px;font-size:12px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:none;border-radius:8px;padding:6px 10px;cursor:pointer}
+  .copybtn:active{transform:scale(.96)}
+
+  .cta{background:linear-gradient(135deg,var(--orange),var(--purple));border-radius:18px;padding:24px;color:#fff;margin-top:22px;text-align:center}
+  .cta h2{font-size:20px;font-weight:900}
+  .cta p{font-size:14px;margin-top:8px;color:#FFEFE3}
+  .cta a{display:inline-block;margin-top:16px;background:#fff;color:var(--purple);font-weight:900;text-decoration:none;padding:14px 26px;border-radius:99px}
+  .cta .small{font-size:11.5px;color:#FFE3CF;margin-top:12px}
+
+  .genre-input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:15.5px;margin-top:12px;background:#fff}
+  .genre-input:focus{outline:none;border-color:var(--purple)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:99px;padding:8px 14px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;transition:.12s}
+  .chip:hover{border-color:var(--purple)}
+  .chip.on{background:var(--purple);border-color:var(--purple);color:#fff}
+  .genre-tag{display:inline-block;font-size:12.5px;font-weight:700;color:var(--purple);background:var(--purple-soft);padding:6px 12px;border-radius:99px;margin-bottom:6px}
+
+  .michelp{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+  .michelp summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--purple);padding:11px 14px;list-style:none}
+  .michelp summary::-webkit-details-marker{display:none}
+  .michelp[open] summary{border-bottom:1px solid var(--line)}
+  .michelp-body{font-size:13px;color:var(--ink);line-height:1.95;padding:12px 14px}
+  .michelp-body b{color:var(--purple)}
+  .dumphints{margin-top:12px;background:var(--purple-soft);border-radius:12px;padding:12px 14px}
+  .dumphints .dh-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:6px}
+  .dumphints ul{margin:0;padding-left:18px;columns:2;column-gap:18px}
+  .dumphints li{font-size:12.5px;color:var(--ink);margin:3px 0;break-inside:avoid}
+  .finemode{margin-top:16px;border:1px dashed var(--line);border-radius:14px;background:#fff;overflow:hidden}
+  .finemode>summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--purple);padding:14px 16px;list-style:none}
+  .finemode>summary::-webkit-details-marker{display:none}
+  .finemode>summary small{display:block;font-weight:400;color:var(--gray);font-size:12px;margin-top:3px}
+  .finemode[open]>summary{border-bottom:1px solid var(--line)}
+  .finemode .fm-pad{padding:4px 16px 14px}
+  .finemode .card.qcard{margin-top:10px;box-shadow:none}
+
+  .hidden{display:none}
+  .step-tabs{display:flex;gap:8px;font-size:12px;color:var(--gray);margin-bottom:6px}
+  .step-tabs span.on{color:var(--purple);font-weight:700}
+  footer{text-align:center;font-size:11.5px;color:var(--gray);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brandbar"></div>
+
+  <!-- ====== START ====== -->
+  <section id="screen-start">
+    <span class="badge">プレ企画 第3弾 ｜ 無料配布</span>
+    <h1>なぜあなたは今、<br><span class="hl">稼げていない</span>のか？<br>50問でわかる、note収益化診断</h1>
+    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今いちばん詰まっている場所＝<b>稼げていない理由</b>を、ひとつに絞って言い当てます。</p>
+
+    <div class="card">
+      <strong>まず、あなたの発信ジャンルは？</strong>
+      <p class="note-small" style="margin-top:6px">恋愛・復縁でも、副業でも、子育てでも。選んだジャンルに合わせて、結果と出力（一次情報の整理・note生成プロンプト・競合リサーチ）をチューニングします。</p>
+      <input id="genre-input" class="genre-input" placeholder="例：復縁・恋愛 ／ 副業 ／ 子育て（自由入力OK）">
+      <div class="chips" id="genre-chips"></div>
+    </div>
+
+    <div class="card">
+      <strong>この診断でわかること</strong>
+      <p class="note-small" style="margin-top:8px">① 8領域の収益化スコア（100点満点）<br>② あなたの最大のボトルネック＝なぜ今、稼げていないのか<br>③ そのまま使える処方箋<br>④【特典】どんなジャンルでも刺さるnoteの素材＝<b>一次情報＆アバター</b>を引き出す抽出エンジン</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="startQuiz()">診断をはじめる（約3分）</button>
+      </div>
+      <div class="privacy"><span class="dot"></span>入力はすべてこの端末の中だけで処理され、どこにも送信されません</div>
+    </div>
+    <footer>note収益化 セルフ診断ツール ｜ 50問診断 + 一次情報・アバター抽出エンジン</footer>
+  </section>
+
+  <!-- ====== QUIZ ====== -->
+  <section id="screen-quiz" class="hidden">
+    <div class="qmeta"><span id="q-count"></span><span id="q-percent"></span></div>
+    <div class="prog"><i id="q-bar"></i></div>
+    <div class="card">
+      <div class="qdomain" id="q-domain"></div>
+      <div class="qtext" id="q-text"></div>
+      <div id="q-options"></div>
+      <a class="backlink hidden" id="q-back" onclick="prevQuestion()">← 前の質問にもどる</a>
+    </div>
+  </section>
+
+  <!-- ====== RESULT ====== -->
+  <section id="screen-result" class="hidden">
+    <span class="badge">あなたの診断結果</span>
+    <div class="card" style="text-align:center">
+      <div class="scorebig"><span id="r-score">0</span><span style="font-size:24px">/100</span></div>
+      <div class="scoresub">note収益化スコア</div>
+    </div>
+
+    <div class="verdict">
+      <div class="tag">＝ なぜあなたは今、稼げていないのか</div>
+      <h2 id="r-verdict-title"></h2>
+      <p id="r-verdict-body"></p>
+      <div class="step">
+        <b>今日の一歩</b>
+        <p id="r-verdict-step"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>8領域スコア</strong>
+      <div class="bars" id="r-bars"></div>
+    </div>
+
+    <div class="card">
+      <strong style="color:var(--good)">あなたの武器</strong>
+      <div class="strength" id="r-strength" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card">
+      <strong>8領域・詳細レポート</strong>
+      <p class="note-small" style="margin-top:6px">弱い順に並んでいます。上から順に手を打つのが、収益化への最短ルートです。</p>
+      <div id="r-report"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-purple" onclick="goPart2()">【特典】一次情報＆アバターを引き出す →</button>
+      <button class="btn btn-ghost" onclick="restart()">もう一度診断する</button>
+    </div>
+  </section>
+
+  <!-- ====== PART 2 ====== -->
+  <section id="screen-part2" class="hidden">
+    <span class="badge">特典 ｜ 一次情報 → note生成プロンプト</span>
+    <div id="p2-genre-tag" class="genre-tag hidden"></div>
+    <h1 style="font-size:22px">思い出を<span class="hl">ぶっ込む</span>だけ。<br>あとはAIが、note素材に整えます</h1>
+    <p class="lead"><b>AI×note自動化でいちばんの“骨”は、自動化そのものではありません。</b>あなたにしか持っていない一次情報（実体験）を、先に出し切って“まとめる”こと。ここさえ出し切れれば、あとは付け足してAIに設定するだけで、noteは形になります。だから今は、きれいにまとめなくてOK。順番もバラバラでOK。思い出せることを<b>声でぜんぶ話す</b>か書きなぐるだけ。あなたの言葉から、整理済みの<b>一次情報＆アバター</b>と<b>note生成プロンプト</b>を取り出します。空欄が多くても大丈夫。</p>
+
+    <!-- 丸投げ（メイン） -->
+    <div class="card">
+      <span class="genre-tag" style="background:var(--orange-soft);color:var(--orange)">STEP 1 ｜ ぶっ込む（丸投げ）</span>
+      <p class="note-small" style="margin-top:8px">下の「話すネタ」を見ながら、思いつくまま話す／書く。<b>15分かけてOK</b>。まとめようとせず、エピソード・感情・数字・セリフを、そのまま吐き出してください。整理はあとでAIがやります。</p>
+      <div class="voicebar">
+        <button class="btn btn-purple" id="dump-mic-btn" onclick="toggleDumpMic()">🎤 声でぜんぶ話す</button>
+        <span class="note-small">話した言葉が、そのまま下の欄に入ります</span>
+      </div>
+      <div id="p2-voice-unsupported" class="rx hidden"><p>このブラウザは音声入力に未対応です。<b>Google Chrome（PC・Android）</b>でひらくと声で入力できます。キーボードでの書きなぐりはそのまま使えます。</p></div>
+      <details class="michelp"><summary>🎤 マイクが反応しない／許可のオンの仕方がわからない</summary>
+        <div class="michelp-body">
+          <b>PCのChrome：</b>アドレスバー左の 🔒 か 🎤 アイコンをクリック →「マイク」を<b>許可</b> → ページを再読み込み。<br>
+          <b>iPhone：</b>「設定」→ Chrome（またはSafari）→ <b>マイク</b> をオン。さらに「設定 → プライバシーとセキュリティ → マイク」でブラウザがオンか確認。<br>
+          <b>Android：</b>最初に出る「マイクを使用しますか？」で<b>許可</b>。出ないときは Chrome の ⋮ →「設定」→「サイトの設定」→「マイク」。<br>
+          ※音声は文字起こしのためにブラウザが使うだけで、このアプリに保存・送信されることはありません。
+        </div>
+      </details>
+      <div class="ta-wrap" style="margin-top:12px">
+        <textarea id="p2-dump" placeholder="例）昔は毎晩のように元彼にLINEして既読スルーされて…「どうせ私なんて」が口グセだった。占いにもお金を使った。ある日◯◯に気づいて、◯◯をやめたら3週間で連絡が来て…（順番バラバラ・言いっぱなしでOK）" style="min-height:220px"></textarea>
+        <button class="micbtn" id="dump-mic" onclick="toggleDumpMic()" title="音声入力" aria-label="音声入力">🎤</button>
+      </div>
+      <div class="dumphints" id="dump-hints"></div>
+    </div>
+
+    <!-- 1問ずつ（任意・丁寧モード） -->
+    <details class="finemode">
+      <summary>もっと丁寧にやりたい人へ：12の問いに1つずつ答える<small>丸投げが苦手なら、こちらで1問ずつ。入力すれば整理の精度が上がります（任意）</small></summary>
+      <div class="fm-pad">
+        <div class="voicebar">
+          <button class="btn btn-purple" onclick="guideStart()">🎤 声で順番に答える</button>
+          <span class="note-small">各欄の🎤でも個別に話せます</span>
+        </div>
+        <div class="card qcard" id="p2-form"></div>
+      </div>
+    </details>
+
+    <!-- 競合リサーチ -->
+    <div class="card">
+      <strong style="color:var(--purple)">競合リサーチ（任意）</strong>
+      <p class="note-small" style="margin-top:6px">気になる競合のXアカウントを入れると、<b>競合分析用のプロンプト</b>を生成します。ChatGPT / Claudeに貼って分析 → 結果を下に貼り戻すと、note生成プロンプトに自動で織り込まれます。</p>
+      <label style="display:block;font-weight:700;font-size:14.5px;margin-top:14px">競合のX ID（@付き／改行・カンマで複数OK）</label>
+      <textarea id="p2-rivals" placeholder="@example1&#10;@example2" style="min-height:60px"></textarea>
+      <div class="btn-row"><button class="btn btn-ghost" onclick="buildCompetitorPrompt()">競合リサーチプロンプトを作る</button></div>
+      <div id="p2-rival-out" class="hidden"></div>
+      <label style="display:block;font-weight:700;font-size:14.5px;margin-top:18px">競合分析の結果（任意・貼り戻し）</label>
+      <div class="hint" style="font-size:12.5px;color:var(--gray);margin:3px 0 8px">AIで分析した結果をここに貼ると、note生成プロンプトに「差別化の参考」として反映されます。</div>
+      <textarea id="p2-rival-result" placeholder="競合分析の結果をここに貼る（空欄でもOK）"></textarea>
+    </div>
+
+    <!-- 競合の有料note → 型・パワーワード抽出（丸パクリ防止） -->
+    <div class="card">
+      <strong style="color:var(--purple)">競合の有料note → 型・パワーワードだけ借りる（任意）</strong>
+      <p class="note-small" style="margin-top:6px">丸パクリは厳禁。競合の有料noteから、中身（体験・事実・具体例）ではなく、<b>型（構成の流れ）</b>と<b>パワーワード（刺さる言い回しの“型”）</b>だけを抜き出します。中身はあなたの一次情報で埋めるので、結果はあなただけのオリジナルになります。</p>
+      <label style="display:block;font-weight:700;font-size:14.5px;margin-top:14px">競合の有料note本文（気になる部分・見出しだけでもOK）</label>
+      <textarea id="p2-comp-note" placeholder="競合の有料noteの本文や見出しをここに貼る（空欄でもOK）" style="min-height:90px"></textarea>
+      <div class="btn-row"><button class="btn btn-ghost" onclick="buildTracePrompt()">型・パワーワードだけ抽出するプロンプトを作る</button></div>
+      <div id="p2-trace-out" class="hidden"></div>
+      <label style="display:block;font-weight:700;font-size:14.5px;margin-top:18px">抽出した「型・パワーワード」を貼り戻す（任意）</label>
+      <div class="hint" style="font-size:12.5px;color:var(--gray);margin:3px 0 8px">AIで抽出した「型＋パワーワード」をここに貼ると、note生成プロンプトに“骨組みと言葉の型”として反映されます（競合の中身は流用しません）。</div>
+      <textarea id="p2-trace-result" placeholder="抽出した型・パワーワードをここに貼る（空欄でもOK）"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="buildOutputs()">丸投げを整理して、note生成プロンプトを出力する →</button>
+    </div>
+
+    <div id="p2-output" class="hidden">
+      <div class="card" style="margin-top:22px">
+        <strong style="color:var(--orange)">あなた専用 note生成プロンプト（タップでコピー）</strong>
+        <p class="note-small" style="margin-top:6px">これをコピーして、教材のAI×note自動化（ChatGPT / Claude）に貼るだけ。あなたにしか書けないnoteが生成されます。</p>
+        <div class="infocard" style="margin-top:10px">
+          <button class="copybtn" id="p2-note-copy">コピー</button>
+          <div class="k">note生成プロンプト</div>
+          <div class="v" id="p2-note-prompt"></div>
+        </div>
+        <div class="dumphints" style="margin-top:14px">
+          <div class="dh-title">▶ ここから先＝あと少し付け足すだけで、あなたのnoteが完成します</div>
+          <ul style="columns:1;padding-left:18px">
+            <li><b>① コピー</b>して、教材のAI×note自動化（ChatGPT / Claude）に貼る</li>
+            <li><b>② AIがSTEP1で整理</b>し、STEP2で「足りない枠」をあなたに質問します</li>
+            <li><b>③ 質問に答えて付け足す</b>＝ここで一次情報を“出し切る”。あとはAIが本文化します</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <strong>素材：あなたの一次情報カード</strong>
+        <p class="note-small" style="margin-top:6px">プロンプトに織り込んだ素材です。単体でもコピーして使えます。</p>
+        <div id="p2-cards"></div>
+      </div>
+
+      <div class="cta">
+        <h2>この続き＝AI×note自動化の全体像は<br>教材で公開します</h2>
+        <p>8つのテーマを40分の動画で解説。診断で見えた弱点を、最短で埋めていく具体ステップ。<br><b>6/20</b> 公開／参加者には<b>先行価格</b>でご案内します。</p>
+        <a href="#" id="cta-link">受け取り口はこちら（プロフリンク）</a>
+        <div class="small">※リンクは差し替え箇所です（教材URL / プロフィールリンク）</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="backToResult()">← 診断結果にもどる</button>
+      </div>
+    </div>
+    <footer>入力内容はこの端末内のみで処理され、送信・保存されません</footer>
+  </section>
+
+  <!-- voice guide bar -->
+  <div id="guidebar" class="guidebar hidden">
+    <div class="gl" id="guide-label"></div>
+    <div class="gbtns">
+      <button class="gb-stop" onclick="guideStop()">■ 終了</button>
+      <button class="gb-next" id="guide-next-btn" onclick="guideNext()">次の質問 ▶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== 50 questions across 8 domains ===== */
+const DOMAINS = [
+  {key:"concept", name:"コンセプト設計"},
+  {key:"primary", name:"一次情報"},
+  {key:"brand",   name:"ブランディング"},
+  {key:"writing", name:"ライティング"},
+  {key:"fan",     name:"ファン化"},
+  {key:"ai",      name:"AI自動化"},
+  {key:"funnel",  name:"集客導線"},
+  {key:"sales",   name:"セールスレター"},
+];
+
+const QUESTIONS = [
+  // concept (7)
+  {d:"concept", t:"自分のnoteが「誰の、どんな悩みを解決するか」を一文で言える"},
+  {d:"concept", t:"競合と違う、自分だけの切り口を持っている"},
+  {d:"concept", t:"「最終的にこれを売る」と決めた商品やテーマがある"},
+  {d:"concept", t:"ターゲット読者の顔が、具体的に思い浮かぶ"},
+  {d:"concept", t:"発信が最終的にどこ（収益）につながるか、導線を設計できている"},
+  {d:"concept", t:"「なぜ自分がこれを語るのか」の理由を説明できる"},
+  {d:"concept", t:"発信ジャンルを一つに絞れている"},
+  // primary (6)
+  {d:"primary", t:"自分の体験を、具体的なエピソードで語れる"},
+  {d:"primary", t:"失敗談を隠さず、正直に出せる"},
+  {d:"primary", t:"自分の数字や実績を、具体的に示せる"},
+  {d:"primary", t:"ビフォー（過去）とアフター（今）の変化を語れる"},
+  {d:"primary", t:"借り物の知識ではなく、自分の言葉で書いている"},
+  {d:"primary", t:"読者が「あなたにしか書けない」と感じる話を持っている"},
+  // brand (6)
+  {d:"brand", t:"プロフィールを見ただけで、何の人か一瞬で分かる"},
+  {d:"brand", t:"アイコン・ヘッダー・世界観に統一感がある"},
+  {d:"brand", t:"自分のキャラや口調が、発信全体で一貫している"},
+  {d:"brand", t:"「この人といえばこれ」という代名詞・肩書きがある"},
+  {d:"brand", t:"発信内容に、ぶれない一貫したテーマがある"},
+  {d:"brand", t:"読者に名前や顔を覚えてもらえている実感がある"},
+  // writing (6)
+  {d:"writing", t:"最初の3行で、読者の心を掴める"},
+  {d:"writing", t:"一文を短く、リズムよく書けている"},
+  {d:"writing", t:"読者の感情を動かす表現ができる"},
+  {d:"writing", t:"結論から先に書けている"},
+  {d:"writing", t:"比喩や具体例で、難しいことを分かりやすくできる"},
+  {d:"writing", t:"最後まで読ませる文章構成を作れる"},
+  // fan (6)
+  {d:"fan", t:"コメントやDMに、丁寧に返している"},
+  {d:"fan", t:"読者と双方向のやり取りが生まれている"},
+  {d:"fan", t:"「また読みたい」と思わせる発信ができている"},
+  {d:"fan", t:"自分を応援してくれる固定の読者がいる"},
+  {d:"fan", t:"読者が今かかえている悩みを把握している"},
+  {d:"fan", t:"無料でも、出し惜しみせず価値を出し切れている"},
+  // ai (7)
+  {d:"ai", t:"AIを使って、発信を効率化できている"},
+  {d:"ai", t:"投稿の型・テンプレートを持っている"},
+  {d:"ai", t:"ネタ出しをAIに任せられる"},
+  {d:"ai", t:"文章の下書きをAIで作れる"},
+  {d:"ai", t:"発信作業をルーティン化できている"},
+  {d:"ai", t:"AIに自分の文体・トーンを学習させている"},
+  {d:"ai", t:"手作業の時間を減らす仕組みを持っている"},
+  // funnel (6)
+  {d:"funnel", t:"Xなど他SNSから、noteへ読者を誘導できている"},
+  {d:"funnel", t:"無料記事から有料商品への導線がある"},
+  {d:"funnel", t:"プロフィールに、次の行動へのリンクがある"},
+  {d:"funnel", t:"無理なく、定期的に投稿できている"},
+  {d:"funnel", t:"拡散されやすい投稿の型を持っている"},
+  {d:"funnel", t:"新規読者が、継続的に増えている"},
+  // sales (6)
+  {d:"sales", t:"商品の魅力を、自分の言葉で伝えられる"},
+  {d:"sales", t:"読者の悩みを、本人以上に言語化できる"},
+  {d:"sales", t:"買うと何がどう変わるか（ベネフィット）を具体的に示せる"},
+  {d:"sales", t:"価格の根拠を、納得感をもって説明できる"},
+  {d:"sales", t:"行動を促すCTA（呼びかけ）を書ける"},
+  {d:"sales", t:"売り込み感を出さず、自然に販売できる"},
+];
+
+const OPTIONS = [
+  {label:"しっかりできている", val:3},
+  {label:"まあまあできている", val:2},
+  {label:"あまりできていない", val:1},
+  {label:"まったくできていない", val:0},
+];
+
+const DOMAIN_INFO = {
+  concept:{
+    desc:"誰の何を解決し、最後に何を売るかの設計",
+    verdict:"コンセプトがぼやけている",
+    why:"発信力もネタもあるのに、『誰の何を解決し、最後に何を売るか』が一本につながっていません。読者は“結局この人は何の人？”の数秒で離れます。コンセプトは才能ではなく設計。ここが定まると、同じ発信量でも刺さり方が一変します。",
+    step:"『◯◯で悩む人を、◯◯な状態にする人』を一文で書き切る。これが全記事の背骨になります。",
+    strength:"何屋かが一目で伝わる。発信の軸が定まっているのが、あなたの武器です。",
+    bands:{high:"軸が明確。あとは全記事をこの一本の道に乗せるだけです。",mid:"方向は見えているが、まだ言語化が甘い。一文で言い切れるまで削りましょう。",low:"『誰を・どう変える・何で稼ぐ』が未確定。ここが定まらないと、何を書いても積み上がりません。"}
+  },
+  primary:{
+    desc:"あなたにしか書けない実体験・実感",
+    verdict:"一次情報が足りていない",
+    why:"ノウハウは語れても“あなた自身の体験”が薄いと、誰が書いても同じ記事になります。読者がお金を払うのは情報ではなく『この人だから』。検索やAIで手に入る情報の値段は下がり続け、一次情報だけが最後まで価値を保ちます。ここが最大の伸びしろです。",
+    step:"このあとの『一次情報 抽出エンジン』で、失敗体験を1つ言語化する。それだけで明日の記事が変わります。",
+    strength:"あなたにしか書けない体験を持っている。誰にも真似できない最強の資産です。",
+    bands:{high:"体験の引き出しが豊富。あとは出し惜しみせず記事の主役に据えるだけ。",mid:"材料はあるが、具体のエピソードまで降りていない。固有名詞・数字・セリフを足しましょう。",low:"記事が“借り物の情報”になりがち。あなたの体験こそ、唯一の差別化です。"}
+  },
+  brand:{
+    desc:"『この人といえばこれ』という記憶の旗",
+    verdict:"覚えてもらえていない",
+    why:"発信は届いても“記憶に残っていない”状態です。プロフ・口調・テーマがバラつくと、フォローされても次に思い出してもらえません。ブランドとは『この人といえばこれ』の一言。それが無いと、良い記事もその場で消費されて終わります。",
+    step:"プロフ一行目を『肩書き＋誰を救うか』に書き換え、口調とテーマを固定して3週間ぶらさない。",
+    strength:"『この人といえばこれ』が確立している。指名で選ばれる強さがあります。",
+    bands:{high:"世界観が一貫。名前を覚えてもらえる土台ができています。",mid:"惜しい。あと一歩“らしさ”を尖らせれば記憶に残ります。",low:"発信が散らばって印象に残っていません。まず一つの旗を立てましょう。"}
+  },
+  writing:{
+    desc:"最後まで読ませる、伝わる文章力",
+    verdict:"読まれる前に離脱されている",
+    why:"内容は良いのに、冒頭3行と一文の長さで読者を逃しています。どんな名作も読まれなければ存在しないのと同じ。掴み・短文・結論先出しの3点だけで読了率は大きく変わり、それがそのまま売上に直結します。",
+    step:"直近記事の冒頭3行を『問いかけ or 断言』に書き直し、長い一文を全部割る。",
+    strength:"最後まで読ませる文章力がある。伸びる発信者の必須条件を満たしています。",
+    bands:{high:"読ませる力がある。あとは型として固定すれば量産できます。",mid:"伝わるが、まだ“流し読み”される文。フックと短文を意識しましょう。",low:"良い中身が冒頭で閉じられています。最初の3行に全力を。"}
+  },
+  fan:{
+    desc:"読者と築く、応援される関係性",
+    verdict:"関係性が作れていない",
+    why:"フォロワー数はあっても“あなたを応援する人”になっていません。販売を決めるのは記事の出来より関係性。コメント返信・双方向・出し惜しみしない無料提供で信頼残高が貯まり、それが後の『購入ボタン』を押させます。",
+    step:"届いたコメント/DMに全部返す。週1で『読者の悩みに全力で答える無料記事』を出す。",
+    strength:"あなたを応援する固定読者がいる。何より強い販売基盤です。",
+    bands:{high:"応援される関係ができている。売れる前提が整っています。",mid:"反応はあるが一方通行気味。読者の名前を呼び、対話を増やしましょう。",low:"発信が独り言になっています。まず一人の読者と深くつながること。"}
+  },
+  ai:{
+    desc:"AIと型で発信を回す仕組み",
+    verdict:"全部を手作業でやっている",
+    why:"熱量も体験もあるのに、全部を手作業でやっていて、結果が出る前に燃え尽きる構造です。AIで型化・下書き・ネタ出しを仕組み化すれば、同じ時間で発信量が数倍に。続けられる人だけが残る世界で生き残れます。ここが教材の本丸です。",
+    step:"自分の文体をAIに学習させたプロンプトを1つ作り、ネタ出し→下書きを任せる。",
+    strength:"AIと仕組みで発信を回せている。量と継続で他を圧倒できます。",
+    bands:{high:"仕組みで回せている。継続できる発信者の強さです。",mid:"一部はAI活用済み。型化と文体学習まで進めれば一気に楽になります。",low:"気合いと手作業に依存しています。仕組み化が継続の鍵です。"}
+  },
+  funnel:{
+    desc:"SNS→note→商品をつなぐ動線",
+    verdict:"導線が途切れている",
+    why:"良い記事を書いても、読まれる入口と買われる出口がつながっていません。SNS→note→有料商品の一本道がないと、努力が点のまま終わります。導線は発信の血管。ここをつなぐだけで、既存の記事が急に働き始めます。",
+    step:"プロフに『次の一歩』リンクを設置し、無料記事の最後に有料への導線を1本通す。",
+    strength:"集客から販売までの動線が通っている。仕組みで売れる状態です。",
+    bands:{high:"入口から出口まで一本道。流入が売上に変換できています。",mid:"導線はあるが細い。SNSからの誘導と投稿頻度を強化しましょう。",low:"記事が点在して回収できていません。まず一本の動線を引くこと。"}
+  },
+  sales:{
+    desc:"価値を伝え、自然に売る言葉",
+    verdict:"最後の“売る”で止まっている",
+    why:"集客もファンもいるのに、最後の『売る』で止まっています。価値はあるのに、ベネフィットの言語化と一押しが足りない状態。今いる読者からでも収益化できるのに、伝え方ひとつで取りこぼしています。",
+    step:"商品を『買うと何がどう変わるか』のビフォーアフターで書き、売り込みでなく背中を押す一文で締める。",
+    strength:"自然に売れるセールス力がある。収益化の最終関門を越えている証拠です。",
+    bands:{high:"売る力がある。あとは届ける数を増やすだけ。",mid:"伝わるが一押しが弱い。ベネフィットとCTAを具体に。",low:"価値を言葉にできていません。まず読者の悩みを本人以上に言語化することから。"}
+  },
+};
+function band(pct){ return pct>=70 ? "high" : pct>=40 ? "mid" : "low"; }
+const BAND_LABEL = {high:"強み", mid:"のびしろ", low:"急所"};
+
+const PRIMARY_PROMPTS = [
+  {k:"① 過去の自分（＝読者像）", q:"今の読者と同じ悩みを抱えていた頃、どんな状況でしたか？", hint:"年齢・環境・何に困っていたかを具体的に。これが“アバター”の土台です。", tip:"アバター（理想の読者像）の核。読者は過去のあなたに自分を重ねます。"},
+  {k:"② どん底の瞬間", q:"その頃、いちばんつらかった・恥ずかしかった瞬間は？", hint:"その時の情景・場所・口にした言葉まで。", tip:"冒頭の“掴み”の最深部。完璧な人より、どん底を見せる人に共感が集まります。"},
+  {k:"③ 口グセ・本音", q:"その頃、よく口にした／心の中で思っていた言葉は？", hint:"「どうせ私なんて」など、実際のセリフで。", tip:"アバターの解像度が一気に上がる。読者の本音をそのまま代弁できます。"},
+  {k:"④ 遠回り・失敗", q:"効果がなかった・間違っていた努力は？", hint:"やってみたけどダメだったこと。", tip:"「私も同じ失敗をした」で一気に信頼が生まれます。"},
+  {k:"⑤ 転機", q:"流れが変わったきっかけ・出会い・気づきは？", hint:"「あの時から変わった」という瞬間を。", tip:"ストーリーの山場。before→afterの“矢印”になります。"},
+  {k:"⑥ やったこと（方法）", q:"具体的に何をして、変わっていきましたか？", hint:"取った行動・考え方の変化を。", tip:"ノウハウの核。読者が再現できる道筋として効きます。"},
+  {k:"⑦ 小さな成功", q:"初めて手応えを感じた瞬間は？", hint:"大きな成果でなくてOK。最初の小さな一歩を。", tip:"再現性の証拠。「自分にもできそう」を作ります。"},
+  {k:"⑧ 感情が動いた瞬間", q:"強く心が動いた出来事は？（嬉しい/悔しい/怖い）", hint:"その時の情景・セリフ・体の感覚まで。", tip:"感情描写は読者の感情を動かす燃料。記事の温度が上がります。"},
+  {k:"⑨ 数字・実績", q:"語れる数字や成果はありますか？", hint:"小さくてOK。期間・人数・金額・回数など。", tip:"主張の説得力を一気に上げます。具体数字は信頼の近道。"},
+  {k:"⑩ ビフォーアフター", q:"変わる前と、変わった後はどう違う？", hint:"過去の自分と今の自分を並べて。", tip:"ノウハウの“効果”を体現する証拠。販売記事の核になります。"},
+  {k:"⑪ 価値観・ゆずれないこと", q:"発信で大事にしている信念は？", hint:"「これだけは言いたい」という軸を。", tip:"あなたのブランドそのもの。ファン化と差別化の源泉です。"},
+  {k:"⑫ 読者へのメッセージ", q:"過去の自分（＝今の読者）に、今かけたい言葉は？", hint:"いちばん伝えたいことを一言で。", tip:"締めに効く。CTA直前で読者の心を動かす“感情の橋”になります。"},
+];
+
+const NOTE_FOCUS = {
+  concept:"記事の冒頭で『誰の、どんな悩みを解決する記事か』をはっきり提示する",
+  primary:"一次情報（あなた自身の体験）を主役にし、ノウハウは脇役に回す",
+  brand:"あなたのキャラ・口調を一貫させ、署名性のある文体で書く",
+  writing:"冒頭3行のフックと一文の短さを特に意識し、読了率を最大化する",
+  fan:"読者への問いかけと余韻を入れ、『また読みたい』と思わせて締める",
+  ai:"あとから型として再利用できる、再現性のある構成で書く",
+  funnel:"記事末に次の一歩（プロフィール／関連記事）への自然な導線を入れる",
+  sales:"売り込み感を出さず、自然に背中を押す一文で締める",
+};
+
+const GENRE_PRESETS = ["復縁・恋愛","婚活","副業・ビジネス","子育て・育児","健康・ダイエット","美容","自己啓発・マインド","投資・お金","HSP・繊細さん","スピリチュアル"];
+
+/* ===== state ===== */
+let idx = 0;
+let bottleneckKey = null;
+let totalScore = 0;
+let genre = "";
+const answers = new Array(QUESTIONS.length).fill(null);
+
+const $ = id => document.getElementById(id);
+function show(sec){
+  ["screen-start","screen-quiz","screen-result","screen-part2"].forEach(s=>$(s).classList.add("hidden"));
+  $(sec).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderGenreChips(){
+  const box = $("genre-chips"); if(!box) return;
+  box.innerHTML="";
+  GENRE_PRESETS.forEach(g=>{
+    const c = document.createElement("button");
+    c.className="chip"; c.textContent=g;
+    c.onclick=()=>{
+      $("genre-input").value = g;
+      [...box.children].forEach(x=>x.classList.toggle("on", x===c));
+    };
+    box.appendChild(c);
+  });
+  $("genre-input").addEventListener("input", ()=>{
+    [...box.children].forEach(x=>x.classList.toggle("on", x.textContent===$("genre-input").value.trim()));
+  });
+}
+
+function startQuiz(){
+  genre = ($("genre-input").value||"").trim();
+  idx=0; renderQuestion(); show("screen-quiz");
+}
+
+function domainName(key){ return DOMAINS.find(d=>d.key===key).name; }
+
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  $("q-count").textContent = `Q${idx+1} / ${QUESTIONS.length}`;
+  const pct = Math.round((idx)/QUESTIONS.length*100);
+  $("q-percent").textContent = `${pct}%`;
+  $("q-bar").style.width = pct+"%";
+  $("q-domain").textContent = "領域：" + domainName(q.d);
+  $("q-text").textContent = q.t;
+  const box = $("q-options");
+  box.innerHTML = "";
+  OPTIONS.forEach((o,i)=>{
+    const b = document.createElement("button");
+    b.className = "opt";
+    b.innerHTML = `<b>${["A","B","C","D"][i]}</b>${o.label}`;
+    b.onclick = ()=>answer(o.val);
+    box.appendChild(b);
+  });
+  $("q-back").classList.toggle("hidden", idx===0);
+}
+
+function answer(val){
+  answers[idx] = val;
+  if(idx < QUESTIONS.length-1){ idx++; renderQuestion(); }
+  else { computeResult(); }
+}
+function prevQuestion(){ if(idx>0){ idx--; renderQuestion(); } }
+
+function computeResult(){
+  // per domain
+  const agg = {};
+  DOMAINS.forEach(d=>agg[d.key]={sum:0,max:0});
+  QUESTIONS.forEach((q,i)=>{
+    agg[q.d].sum += (answers[i] ?? 0);
+    agg[q.d].max += 3;
+  });
+  const scores = DOMAINS.map(d=>{
+    const a = agg[d.key];
+    return {key:d.key, name:d.name, pct: Math.round(a.sum/a.max*100)};
+  });
+  const total = Math.round(answers.reduce((s,v)=>s+(v??0),0) / (QUESTIONS.length*3) * 100);
+  totalScore = total;
+  $("r-score").textContent = total;
+
+  // lowest domain = bottleneck, highest = strength
+  let low = scores[0], high = scores[0];
+  scores.forEach(s=>{ if(s.pct < low.pct) low = s; if(s.pct > high.pct) high = s; });
+  bottleneckKey = low.key;
+  const info = DOMAIN_INFO[low.key];
+  $("r-verdict-title").innerHTML = `あなたのボトルネックは<br><em>「${info.verdict}」</em>こと`;
+  $("r-verdict-body").textContent = info.why;
+  $("r-verdict-step").textContent = info.step;
+
+  // strength (highest domain)
+  const hi = DOMAIN_INFO[high.key];
+  $("r-strength").innerHTML = `<h3>${high.name}（${high.pct}%）</h3><p>${hi.strength}</p>`;
+
+  // bars
+  const bars = $("r-bars"); bars.innerHTML="";
+  scores.forEach(s=>{
+    const b = band(s.pct);
+    const color = b==="high" ? "var(--good)" : b==="mid" ? "var(--warn)" : "var(--bad)";
+    const isLow = s.key===low.key;
+    const el = document.createElement("div");
+    el.className="bar";
+    el.innerHTML = `<div class="top"><span>${s.name}${isLow?'<span class="lowmark">最重要</span>':''}</span><span class="pct">${s.pct}%</span></div>
+      <div class="track"><i style="width:0;background:${color}"></i></div>`;
+    bars.appendChild(el);
+    requestAnimationFrame(()=>{ el.querySelector("i").style.width = s.pct+"%"; });
+  });
+
+  // full report, weakest first
+  const sorted = [...scores].sort((a,b)=>a.pct-b.pct);
+  const rep = $("r-report"); rep.innerHTML="";
+  sorted.forEach(s=>{
+    const di = DOMAIN_INFO[s.key];
+    const b = band(s.pct);
+    const el = document.createElement("div");
+    el.className="rep";
+    el.innerHTML = `<div class="rh"><span>${s.name}<span class="btag ${b}">${BAND_LABEL[b]}</span></span><span class="rpct">${s.pct}%</span></div>
+      <div class="rdesc">${di.desc}</div>
+      <div class="rread">${di.bands[b]}</div>`;
+    rep.appendChild(el);
+  });
+
+  show("screen-result");
+}
+
+function restart(){ for(let i=0;i<answers.length;i++)answers[i]=null; idx=0; show("screen-start"); }
+
+/* ===== part 2 ===== */
+function buildForm(){
+  const f = $("p2-form"); f.innerHTML="";
+  PRIMARY_PROMPTS.forEach((p,i)=>{
+    const mic = speechSupported ? `<button class="micbtn" id="mic-${i}" onclick="toggleMic(${i})" title="音声入力" aria-label="音声入力">🎤</button>` : "";
+    const wrap = document.createElement("div");
+    wrap.innerHTML = `<label>${p.k}：${p.q}</label><div class="hint">${p.hint}</div>
+      <div class="ta-wrap">
+        <textarea id="p2-in-${i}" placeholder="${speechSupported?'🎤を押して話す／キーボード入力もOK（空欄でもOK）':'ここに思い出せることを書く（空欄でもOK）'}"></textarea>
+        ${mic}
+      </div>`;
+    f.appendChild(wrap);
+  });
+}
+function renderDumpHints(){
+  const box = $("dump-hints"); if(!box) return;
+  const items = PRIMARY_PROMPTS.map(p=>`<li>${p.q}</li>`).join("");
+  box.innerHTML = `<div class="dh-title">💬 話すネタ（この中から思い出せるものを、順番バラバラでOK）</div><ul>${items}</ul>`;
+}
+function goPart2(){
+  buildForm();
+  renderDumpHints();
+  const tag = $("p2-genre-tag");
+  if(genre){ tag.textContent = "ジャンル：" + genre; tag.classList.remove("hidden"); }
+  else { tag.classList.add("hidden"); }
+  $("p2-voice-unsupported").classList.toggle("hidden", speechSupported);
+  $("p2-output").classList.add("hidden");
+  $("p2-rival-out").classList.add("hidden");
+  show("screen-part2");
+}
+function backToResult(){ show("screen-result"); }
+
+function copyText(text, btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    const o = btn.textContent; btn.textContent="コピー済";
+    setTimeout(()=>btn.textContent=o,1500);
+  });
+}
+
+/* ===== voice input (Web Speech API) ===== */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const speechSupported = !!SR;
+let activeRec = null, activeFieldIdx = null;
+let guideMode = false, guideIdx = 0;
+
+function setMicState(i,on){
+  const b = document.getElementById("mic-"+i);
+  if(b) b.classList.toggle("rec", on);
+}
+function startMic(i){
+  const ta = $("p2-in-"+i);
+  const rec = new SR();
+  rec.lang = "ja-JP"; rec.continuous = true; rec.interimResults = true;
+  const base = ta.value.trim() ? ta.value.replace(/\s+$/,"") + "\n" : "";
+  rec.onresult = (e)=>{
+    let txt = "";
+    for(let k=0;k<e.results.length;k++) txt += e.results[k][0].transcript;
+    ta.value = base + txt;
+  };
+  rec.onerror = (ev)=>{
+    if(ev.error==="not-allowed" || ev.error==="service-not-allowed"){
+      alert("マイクの使用が許可されていません。ブラウザのマイク許可をオンにしてからお試しください。");
+      guideMode = false; $("guidebar").classList.add("hidden");
+    }
+  };
+  rec.onend = ()=>{
+    setMicState(i,false);
+    if(activeRec===rec){ activeRec=null; activeFieldIdx=null; }
+  };
+  activeRec = rec; activeFieldIdx = i; setMicState(i,true);
+  try{ rec.start(); }catch(e){}
+}
+function stopMic(){ if(activeRec){ try{ activeRec.stop(); }catch(e){} } }
+function toggleMic(i){
+  if(!speechSupported){ alert("この端末/ブラウザは音声入力に未対応です。Google Chrome（PC・Android）でお試しください。"); return; }
+  if(activeRec && activeFieldIdx===i){ stopMic(); return; }
+  if(activeRec) stopMic();
+  startMic(i);
+}
+
+/* dump（丸投げ）専用の連続音声入力 */
+let dumpRec = null;
+function setDumpMicState(on){
+  const b = $("dump-mic"); if(b) b.classList.toggle("rec", on);
+  const big = $("dump-mic-btn");
+  if(big) big.textContent = on ? "■ 録音をとめる" : "🎤 声でぜんぶ話す";
+}
+function startDumpMic(){
+  const ta = $("p2-dump");
+  const rec = new SR();
+  rec.lang = "ja-JP"; rec.continuous = true; rec.interimResults = true;
+  let base = ta.value.trim() ? ta.value.replace(/\s+$/,"") + "\n" : "";
+  rec.onresult = (e)=>{
+    let txt = "";
+    for(let k=0;k<e.results.length;k++){
+      txt += e.results[k][0].transcript;
+      if(e.results[k].isFinal) txt += "\n";
+    }
+    ta.value = base + txt;
+  };
+  rec.onerror = (ev)=>{
+    if(ev.error==="not-allowed" || ev.error==="service-not-allowed"){
+      alert("マイクの使用が許可されていません。下の「マイクが反応しない／許可のオンの仕方」を開いて、ブラウザのマイク許可をオンにしてからお試しください。");
+    }
+  };
+  rec.onend = ()=>{ setDumpMicState(false); if(dumpRec===rec) dumpRec=null; };
+  dumpRec = rec; setDumpMicState(true);
+  try{ rec.start(); }catch(e){}
+}
+function stopDumpMic(){ if(dumpRec){ try{ dumpRec.stop(); }catch(e){} } }
+function toggleDumpMic(){
+  if(!speechSupported){ alert("この端末/ブラウザは音声入力に未対応です。Google Chrome（PC・Android）でお試しください。キーボード入力はそのまま使えます。"); return; }
+  if(dumpRec){ stopDumpMic(); return; }
+  if(activeRec) stopMic();
+  startDumpMic();
+}
+
+function guideStart(){
+  if(!speechSupported){ alert("この端末/ブラウザは音声入力に未対応です。Google Chrome（PC・Android）でお試しください。"); return; }
+  guideMode = true;
+  $("guidebar").classList.remove("hidden");
+  guideGo(0);
+}
+function guideGo(i){
+  guideIdx = i;
+  const p = PRIMARY_PROMPTS[i];
+  $("guide-label").innerHTML = `${p.k.replace(/^[①-⑳]\s?/,'')}（${i+1}/${PRIMARY_PROMPTS.length}）<small>${p.q}</small>`;
+  $("guide-next-btn").textContent = (i>=PRIMARY_PROMPTS.length-1) ? "完了 ✓" : "次の質問 ▶";
+  const ta = $("p2-in-"+i);
+  ta.scrollIntoView({behavior:"smooth", block:"center"});
+  if(activeRec) stopMic();
+  setTimeout(()=>{ if(guideMode) startMic(i); }, 400);
+}
+function guideNext(){
+  if(guideIdx < PRIMARY_PROMPTS.length-1){ guideGo(guideIdx+1); }
+  else { guideStop(); }
+}
+function guideStop(){
+  guideMode = false;
+  stopMic();
+  $("guidebar").classList.add("hidden");
+}
+
+renderGenreChips();
+
+function buildCompetitorPrompt(){
+  const raw = ($("p2-rivals").value||"").trim();
+  const ids = raw.split(/[\n,、\s]+/).map(s=>s.trim()).filter(Boolean)
+                 .map(s=> s.startsWith("@") ? s : "@"+s);
+  const out = $("p2-rival-out");
+  out.classList.remove("hidden");
+  if(!ids.length){
+    out.innerHTML = `<div class="rx" style="margin-top:12px"><p>競合のX IDを1つ以上入れてください（例：@example）。</p></div>`;
+    return;
+  }
+  const list = ids.map(id=>"- "+id).join("\n");
+  const gPhrase = genre ? `${genre}ジャンルの` : "";
+  const gLine = genre ? `\n対象ジャンルは「${genre}」です。このジャンルの読者目線で見てください。` : "";
+  const prompt =
+`あなたはSNSマーケティングとnote収益化の専門家です。
+以下の${gPhrase}Xアカウントを競合として分析してください。${gLine}
+
+# 分析対象
+${list}
+
+# 分析項目（アカウントごとに）
+1. 発信コンセプト（誰の、何を解決しているか）を一文で
+2. プロフィールの型（肩書き・実績の見せ方・導線リンク）
+3. 伸びている投稿の共通点（フック・型・テーマ）
+4. 有料note／商品の有無と、その売り方
+5. カバーできていない弱点（＝私が差別化できる隙間）
+
+# 最後に
+この競合群に対して、私が取るべき差別化ポジションを3つ提案してください。
+
+※最新の投稿を取得できない場合は、一般に観測される傾向から推定して構いません。`;
+  out.innerHTML =
+    `<div class="infocard" style="margin-top:12px">
+      <button class="copybtn">コピー</button>
+      <div class="k">競合リサーチプロンプト（${ids.length}件）</div>
+      <div class="v"></div>
+      <div class="tip">▶ ChatGPT / Claudeに貼って分析 → 結果を下の「競合分析の結果」に貼り戻すと、note生成プロンプトに反映されます。</div>
+    </div>`;
+  const card = out.querySelector(".infocard");
+  card.querySelector(".v").textContent = prompt;
+  card.querySelector(".copybtn").onclick = (e)=>copyText(prompt, e.target);
+  out.scrollIntoView({behavior:"smooth"});
+}
+
+function buildTracePrompt(){
+  const src = ($("p2-comp-note").value||"").trim();
+  const out = $("p2-trace-out");
+  out.classList.remove("hidden");
+  if(!src){
+    out.innerHTML = `<div class="rx" style="margin-top:12px"><p>競合の有料noteの本文（または見出し）を貼ってください。気になる部分・見出しだけでもOKです。</p></div>`;
+    return;
+  }
+  const gLine = genre ? `\n対象ジャンルは「${genre}」。このジャンルの読者に効く観点で抽出してください。` : "";
+  const prompt =
+`あなたはnoteの構成と言葉の“型”を見抜くプロの編集者です。
+以下は競合の有料noteの本文です。これを参考に、「型」と「パワーワード」だけを抽出してください。${gLine}
+
+# 最重要ルール（丸パクリ厳禁）
+- 競合の「中身」＝体験・事実・固有名詞・具体例・独自の比喩・実際のセンテンスは、一切コピーしない／言い換えもしない。
+- 抽出するのは(1)記事の骨組み(型)と(2)語彙の型(パワーワード)の2つだけ。中身は私自身の一次情報で埋める前提。
+- 著作権・表現の盗用にならない、抽象化されたテンプレートとして出力する。
+
+# 競合note本文（参考用。ここから“型”だけを読み取る）
+${src}
+
+# 抽出して出力するもの
+## ① 型（構成の骨組み）
+- 記事全体の流れを「ブロック名＋各ブロックの役割」だけで6〜10段に抽象化する（例：1.共感のフック→2.読者の悩みの言語化→3.…）。本文の言葉は使わず、機能だけを書く。
+- 各ブロックで「読者の感情がどう動くか」を一言添える。
+
+## ② パワーワード（言い回しの型）
+- 刺さっている言い回しを“穴あきテンプレート”に抽象化する（例：「◯◯なあなたへ」「実は△△だったんです」）。固有の事実は◯◯／△△に置き換える。
+- そのまま流用できる固有名詞・数字・具体例は載せないこと。
+
+# 最後に
+この型とパワーワードに、私の一次情報を流し込むときの注意点を3つ挙げてください。`;
+  out.innerHTML =
+    `<div class="infocard" style="margin-top:12px">
+      <button class="copybtn">コピー</button>
+      <div class="k">型・パワーワード抽出プロンプト（丸パクリ防止）</div>
+      <div class="v"></div>
+      <div class="tip">▶ ChatGPT / Claudeに貼って抽出 → 出てきた「型＋パワーワード」を下の貼り戻し欄に入れると、note生成プロンプトに反映されます。中身はあなたの一次情報で埋まります。</div>
+    </div>`;
+  const card = out.querySelector(".infocard");
+  card.querySelector(".v").textContent = prompt;
+  card.querySelector(".copybtn").onclick = (e)=>copyText(prompt, e.target);
+  out.scrollIntoView({behavior:"smooth"});
+}
+
+const AVATAR_COUNT = 3; // 最初の3問＝アバター（読者像）
+
+function buildOutputs(){
+  // 一次情報カード
+  const box = $("p2-cards"); box.innerHTML="";
+  const avatarLines = [], infoLines = [];
+  let lines = 0;
+  PRIMARY_PROMPTS.forEach((p,i)=>{
+    const v = ($("p2-in-"+i).value||"").trim();
+    if(!v) return;
+    lines++;
+    (i < AVATAR_COUNT ? avatarLines : infoLines).push(`${p.k}：${v}`);
+    const card = document.createElement("div");
+    card.className="infocard";
+    const text = `【${p.k.replace(/^[①-⑳]\s?/,'')}】\n${v}`;
+    card.innerHTML = `<button class="copybtn">コピー</button>
+      <div class="k">${p.k}</div>
+      <div class="v"></div>
+      <div class="tip">▶ 使い方：${p.tip}</div>`;
+    card.querySelector(".v").textContent = v;
+    card.querySelector(".copybtn").onclick = (e)=>copyText(text, e.target);
+    box.appendChild(card);
+  });
+  const dump = ($("p2-dump").value||"").trim();
+  if(!lines && !dump){
+    box.innerHTML = `<div class="rx"><p>まだ何も入力されていません。1つでもいいので、思い出せる体験を「丸投げ」欄に書く／話してみてください。一次情報は、あなたの記憶の中にしかありません。</p></div>`;
+  } else if(!lines && dump){
+    box.innerHTML = `<div class="rx"><p>「丸投げ」素材は、上のnote生成プロンプトの中でAIが12枠に整理します。1問ずつ整理したカードがほしいときは、下の「12の問いに1つずつ答える」で入力してください。</p></div>`;
+  }
+
+  // note生成プロンプト（丸投げ＋整理済み素材＋診断＋競合分析を合成）
+  const focusName = bottleneckKey ? domainName(bottleneckKey) : "一次情報";
+  const focus = NOTE_FOCUS[bottleneckKey] || NOTE_FOCUS.primary;
+  const avatarBlock = avatarLines.length ? avatarLines.join("\n") : "（未整理：丸投げ素材から拾って言語化してください）";
+  const infoBlock = infoLines.length ? infoLines.join("\n") : "（未整理：丸投げ素材から拾って言語化してください）";
+  const dumpBlock = dump ? dump : "（未入力。整理済み素材だけで進めてください）";
+  const rival = ($("p2-rival-result").value||"").trim();
+  const rivalBlock = rival ? `\n\n# 競合分析の結果（差別化の参考に。同じ切り口を避け、私の体験で勝負する）\n${rival}` : "";
+  const trace = ($("p2-trace-result").value||"").trim();
+  const traceBlock = trace ? `\n\n# 参考にする「型」と「パワーワード」（競合から抽出した“骨組み”と“言い回しの型”だけ。中身は絶対に流用しない）\n${trace}\n※この型の流れに沿って構成し、パワーワードは「言い回しの型」だけ参考にする。競合の体験・事実・具体例・固有の比喩や文章は一切使わず、本文は私の一次情報だけで書く（丸パクリ厳禁）。` : "";
+  const roleGenre = genre ? `${genre}ジャンルに強い` : "";
+  const readerLine = genre ? `${genre}で悩んでいる読者。検索やAIの一般論では満たされず、「自分のことを分かってくれる人」の言葉を探している。` : "あなたの発信テーマで悩み、一般論ではなく“本音で語ってくれる人”を探している読者。";
+  const np =
+`# 役割
+あなたは${roleGenre}プロのnoteライター兼編集者です。SEOやテクニックよりも「たった一人の読者の心を動かすこと」を最優先します。
+
+# この作業の位置づけ（最重要）
+note収益化でいちばんの“骨”は、AIでも自動化でもありません。書き手にしか持っていない一次情報（実体験）を出し切り、それを整理して“まとめる”ことです。ここさえ出し切れれば、あとは型に流し込み、AIで自動化していくだけ。だからあなたの仕事は、私が思いつくまま吐き出した“未整理の素材”を宝物として拾い上げ、整理し、足りないところは私に質問して「出し切らせる」ことです。
+
+# 絶対に守るルール
+- 主役は【私の体験素材】（私の実体験）。一般論・借り物のノウハウで薄めない。
+- 私が実際に使う言葉とトーンを保つ。AIっぽい優等生の文章・きれいごとにしない。
+- 抽象論で終わらせず、必ず具体（固有名詞・数字・情景・心の声）に落とす。
+- 嘘や誇張で実績を作らない。素材が足りなければ、書く前に私へ質問する。
+- 競合から借りてよいのは「構成の型」と「言い回しの型」だけ。事実・体験・具体例は私のものしか使わない（丸パクリ厳禁）。
+
+# 私が思いつくまま話した素材（未整理。順番バラバラ・言いっぱなしでOK。ここから宝を拾って）
+${dumpBlock}
+
+# すでに整理済みの素材（あれば、こちらを優先して使う）
+■ 読者アバター（＝過去の私）
+${avatarBlock}
+■ 一次情報
+${infoBlock}${rivalBlock}${traceBlock}${genre?`\n\n# 発信ジャンル\n${genre}`:""}
+
+# 私の弱点（診断結果）と、この記事での補い方
+最も弱いのは「${focusName}」。だからこの記事では特に —— ${focus}。
+
+# あなたがやること（この順で進める。いきなり本文を書かない）
+STEP1【整理＝ポンだし】上の未整理素材を読み、次の12枠に振り分けて要約する。各枠の意味はこの通り：
+ ①過去の自分(=読者像)：今の読者と同じだった頃の状況　②どん底の瞬間：いちばん辛かった/恥ずかしかった場面　③口グセ・本音：その頃よく言った/思っていた言葉　④遠回り・失敗：効果がなかった努力　⑤転機：流れが変わったきっかけ　⑥やったこと(方法)：具体的に何をして変わったか　⑦小さな成功：初めて手応えを感じた瞬間　⑧感情が動いた瞬間：強く心が動いた出来事　⑨数字・実績：期間・人数・金額・回数　⑩ビフォーアフター：変わる前と後の違い　⑪価値観・ゆずれないこと：大事にしている信念　⑫読者へのメッセージ：過去の自分(=今の読者)にかけたい言葉
+ さらに「読者アバター」を3行で言語化する。
+STEP2【確認＝出し切らせる】整理結果（12枠＋アバター）を私に見せる。埋まらなかった枠・内容が薄い枠は「（要・追加取材）」とし、私に具体的な質問を投げて付け足させること。ここで私が足りないピースを出し切って、はじめて素材が完成する。私が「OK」と言うまで本文を書かない。
+STEP3【執筆】完成した素材を、下の「記事の型」に流し込んで本文を書く。
+
+# 記事の型（この流れで書く）
+1. フック（冒頭3行）：「どん底の瞬間」か「過去の自分（＝読者像）」で始め、読者に“これは自分のことだ”と思わせる
+2. 共感：読者アバターの悩み・口グセ・本音を、本人以上に言語化する
+3. 物語：私の「転機」「やったこと」「小さな成功」を、情景が浮かぶエピソードで語る（＝一次情報の山場）
+4. 学び：その体験から得た、読者が今日から使える視点をひとつだけ
+5. 締め：売り込まず、そっと背中を押す一文で終える
+
+# 文章ルール
+- 一文は40字前後で短く。結論から書く。
+- 比喩か具体例を最低1つ入れる。
+- 見出しは中身が一目で伝わる言葉に（過剰な煽りは禁止）。
+- 文字数：2000〜3000字。`;
+  $("p2-note-prompt").textContent = np;
+  $("p2-note-copy").onclick = (e)=>copyText(np, e.target);
+
+  $("p2-output").classList.remove("hidden");
+  $("p2-output").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
