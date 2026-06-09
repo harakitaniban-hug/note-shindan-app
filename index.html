@@ -35,6 +35,15 @@
   }
   .wrap{max-width:720px;margin:0 auto;padding:24px 18px 80px}
   .brandbar{height:6px;border-radius:99px;background:linear-gradient(90deg,var(--orange),var(--purple));margin-bottom:22px}
+  .offer{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:linear-gradient(90deg,var(--orange),var(--purple));color:#fff;border-radius:14px;padding:11px 16px;margin-bottom:14px;text-align:center;box-shadow:0 8px 20px rgba(124,58,237,.18)}
+  .offer .lim{font-size:12px;font-weight:700;background:rgba(255,255,255,.22);padding:3px 11px;border-radius:99px;letter-spacing:.02em}
+  .offer .price{font-size:13.5px;font-weight:700}
+  .offer .price s{opacity:.82;font-weight:500;margin-right:7px}
+  .offer .price em{font-style:normal;font-size:16px;font-weight:900}
+  .ck{list-style:none;margin-top:10px}
+  .ck li{position:relative;padding:9px 6px 9px 30px;font-size:13.5px;line-height:1.6;border-bottom:1px solid var(--line)}
+  .ck li:last-child{border-bottom:none}
+  .ck li::before{content:"";position:absolute;left:3px;top:11px;width:16px;height:16px;border:2px solid var(--orange);border-radius:5px}
   .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--purple);background:var(--purple-soft);padding:6px 12px;border-radius:99px;margin-bottom:14px}
   h1{font-size:26px;font-weight:900;line-height:1.45;letter-spacing:.01em}
   h1 .hl{color:var(--orange)}
@@ -174,13 +183,17 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="offer">
+    <span class="lim">6/16〜 3日間限定</span>
+    <span class="price"><s>通常 ¥22,000</s><em>→ 無料配布</em></span>
+  </div>
   <div class="brandbar"></div>
 
   <!-- ====== START ====== -->
   <section id="screen-start">
     <span class="badge">プレ企画 第3弾 ｜ 無料配布</span>
     <h1>なぜあなたは今、<br><span class="hl">稼げていない</span>のか？<br>50問でわかる、note収益化診断</h1>
-    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今いちばん詰まっている場所＝<b>稼げていない理由</b>を、ひとつに絞って言い当てます。</p>
+    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今いちばん詰まっている場所＝<b>稼げていない理由</b>を、ひとつに絞って言い当てます。<br><b>何回noteを書いても変わらないのは、才能ではなく“一次情報”が薄いから。</b>AIも、あなたの中にしかない素材がなければ書けません。</p>
 
     <div class="card">
       <strong>まず、あなたの発信ジャンルは？</strong>
@@ -348,6 +361,18 @@
         <strong>素材：あなたの一次情報カード</strong>
         <p class="note-small" style="margin-top:6px">プロンプトに織り込んだ素材です。単体でもコピーして使えます。</p>
         <div id="p2-cards"></div>
+      </div>
+
+      <div class="card">
+        <strong style="color:var(--orange)">noteが出来たら：出す前のチェック（著作権・オリジナリティ）</strong>
+        <p class="note-small" style="margin-top:6px">AIで作った文章は、出す前に必ず読み返して下を確認。型・構造・キーワードは借りてOK、でも“中身”はあなたの一次情報で。アナログの最終チェックは絶対に1回入れる、が約束です。</p>
+        <ul class="ck">
+          <li>競合の文章・具体例・固有の比喩を、そのまま（または言い換えで）使っていないか</li>
+          <li>主役が自分の一次情報（体験・数字・感情・セリフ）になっているか</li>
+          <li>借りたのは型・構造・キーワードだけで、中身はオリジナルか</li>
+          <li>引用するなら、出典を明記しているか</li>
+          <li>読み返して、自分の言葉・トーンになっているか</li>
+        </ul>
       </div>
 
       <div class="cta">
@@ -889,16 +914,21 @@ function buildTracePrompt(){
 ${src}
 
 # 抽出して出力するもの
-## ① 型（構成の骨組み）
+## ① 型・構造（構成の骨組み）
 - 記事全体の流れを「ブロック名＋各ブロックの役割」だけで6〜10段に抽象化する（例：1.共感のフック→2.読者の悩みの言語化→3.…）。本文の言葉は使わず、機能だけを書く。
+- 使われている論理の型があれば名前で示す（例：PREP法＝結論→理由→具体例→結論）。
 - 各ブロックで「読者の感情がどう動くか」を一言添える。
 
 ## ② パワーワード（言い回しの型）
 - 刺さっている言い回しを“穴あきテンプレート”に抽象化する（例：「◯◯なあなたへ」「実は△△だったんです」）。固有の事実は◯◯／△△に置き換える。
 - そのまま流用できる固有名詞・数字・具体例は載せないこと。
 
+## ③ キーワード・テーマ（語のレベル）
+- 読者がよく検索する／反応する一般語のキーワード・テーマ語を列挙する。固有の事実・体験・商品名は除く。
+
 # 最後に
-この型とパワーワードに、私の一次情報を流し込むときの注意点を3つ挙げてください。`;
+1) この型・構造・キーワードに私の一次情報を流し込むときの注意点を3つ挙げてください。
+2) 完成後に私が自分でやる「著作権・盗用チェック」項目を3つ挙げてください（競合の表現をそのまま使っていないか等）。`;
   out.innerHTML =
     `<div class="infocard" style="margin-top:12px">
       <button class="copybtn">コピー</button>
