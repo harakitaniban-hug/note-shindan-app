@@ -1,4 +1,35 @@
 <!DOCTYPE html>
+<!--
+  note収益化 50問診断アプリ（静的・単一HTML / GitHub Pages配布）
+  方針：ユーザー入力を外部に送信しない。すべてクライアント側で完結。
+        （例外：「声で話す」音声入力のみ、ブラウザのWeb Speech APIが文字変換で外部を使う）
+
+  ■ 合言葉（アクセスゲート）
+    <script>内 const ACCESS_PASSWORD で1か所管理。現在の値は "ichi"。
+    ※簡易的な仕切りであり強固な保護ではない（合言葉はソースに平文で入る）。
+      本当に秘匿するなら StatiCrypt 等でページ自体を暗号化すること。
+
+  ■ ローカルでの動作確認手順
+    1) このフォルダで簡易サーバを起動：
+         python3 -m http.server 8766 --directory .
+       （file:// 直開きでもおおむね動くが、クリップボード等は http(s) 推奨）
+    2) ブラウザで http://localhost:8766/micchi_shindan_app.html を開く
+    3) 合言葉ゲート：誤った文字→「違います」、"ichi"→本体表示
+       （同一セッション中は再入力不要。別タブ/再起動で再度要求）
+    4) ジャンル選択 → 「診断をはじめる」→ 50問を通す
+       ・選択肢タップで色が付き、約0.3秒後に自動で次へ進む
+       ・「🔗 続きから再開できるURLをコピー」でURLを控える
+    5) 途中（数問回答した状態）でリロード → 続きの設問から復元されることを確認
+       ・コピーしたURLを別タブで開いても同様に復元
+       ・途中でタブを閉じようとすると離脱警告が出る（結果表示後・トップでは出ない）
+    6) 50問完了 → 結果表示 →「🖼 結果を画像で保存」でPNG、「📄 PDFで保存」でPDFが落ちる
+       ・保存物はスコア／ボトルネック／8領域が見えるSNS向けレイアウト
+    7) リロードすると結果が復元される（全問回答済みのため）
+
+  ■ ハッシュに入れる情報（プライバシー）
+    ジャンルと各設問のA/B/C/D回答(0-3)だけ。特典ページの自由入力（体験談・競合情報等）は
+    一切ハッシュに入れない。
+-->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -147,6 +178,7 @@
   .cta h2{font-size:20px;font-weight:900}
   .cta p{font-size:14px;margin-top:8px;color:#FFEFE3}
   .cta a{display:inline-block;margin-top:16px;background:#fff;color:var(--purple);font-weight:900;text-decoration:none;padding:14px 26px;border-radius:99px}
+  .cta .cta-soon{display:inline-block;margin-top:16px;background:rgba(255,255,255,.18);color:#fff;font-weight:900;padding:14px 26px;border-radius:99px;border:1.5px dashed rgba(255,255,255,.6)}
   .cta .small{font-size:11.5px;color:#FFE3CF;margin-top:12px}
 
   .genre-input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:15.5px;margin-top:12px;background:#fff}
@@ -175,6 +207,38 @@
   .finemode .fm-pad{padding:4px 16px 14px}
   .finemode .card.qcard{margin-top:10px;box-shadow:none}
 
+  .opt.sel{border-color:var(--orange);background:linear-gradient(90deg,var(--orange-soft),#FFF1E6);box-shadow:0 4px 12px rgba(255,122,26,.18)}
+  .opt.sel b{color:var(--orange)}
+
+  /* result → 一次情報入力 への導線 */
+  .nextstep{margin-top:24px;text-align:center}
+  .nextstep .ns-label{display:inline-block;font-size:12.5px;font-weight:700;color:var(--purple);background:var(--purple-soft);padding:6px 14px;border-radius:99px}
+  .nextstep .ns-title{font-size:18px;font-weight:900;margin-top:12px;line-height:1.5}
+  .nextstep .ns-title b{color:var(--orange)}
+  .nextstep .ns-sub{font-size:12.5px;color:var(--gray);margin-top:6px}
+  .nextstep .ns-arrow{font-size:28px;color:var(--orange);line-height:1;margin-top:8px;animation:nsbob 1.2s ease-in-out infinite}
+  @keyframes nsbob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* resume url button */
+  .resumebar{display:flex;justify-content:flex-end;margin-bottom:6px}
+  .resumebar button{font-family:inherit;font-size:11.5px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:none;border-radius:99px;padding:6px 12px;cursor:pointer}
+  .resumebar button:active{transform:scale(.97)}
+
+  /* access gate */
+  #gate-overlay{position:fixed;inset:0;z-index:200;background:
+      radial-gradient(1200px 500px at 100% -10%,var(--purple-soft),transparent 60%),
+      radial-gradient(1000px 500px at -10% 0%,var(--orange-soft),transparent 55%),
+      var(--bg);
+    display:flex;align-items:center;justify-content:center;padding:24px}
+  #gate-overlay .gate-card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:26px;max-width:380px;width:100%;box-shadow:0 8px 30px rgba(124,58,237,.12)}
+  #gate-overlay h2{font-size:19px;font-weight:900}
+  #gate-overlay input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-family:inherit;font-size:16px;margin-top:14px;background:#fff}
+  #gate-overlay input:focus{outline:none;border-color:var(--purple)}
+  #gate-err{color:var(--bad);font-size:13px;font-weight:700;margin-top:10px}
+
+  /* share card (image export) */
+  #share-card{position:fixed;left:-9999px;top:0;width:560px;background:var(--bg);padding:30px;font-family:'Noto Sans JP',system-ui,sans-serif;color:var(--ink)}
+
   .hidden{display:none}
   .step-tabs{display:flex;gap:8px;font-size:12px;color:var(--gray);margin-bottom:6px}
   .step-tabs span.on{color:var(--purple);font-weight:700}
@@ -182,7 +246,23 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<!-- ====== ACCESS GATE ======
+  これは「簡易的な仕切り」であり、強固な保護ではありません。
+  合言葉はHTML内に平文で書かれているため、ソースを見れば誰でも分かります。
+  本当に秘匿したい場合は StatiCrypt 等でページ自体を暗号化してください。 -->
+<div id="gate-overlay">
+  <div class="gate-card">
+    <span class="badge">限定公開</span>
+    <h2>合言葉を入力してください</h2>
+    <p class="note-small" style="margin-top:8px">この診断はお渡しした方だけの限定公開です。合言葉を入力すると開きます。</p>
+    <input id="gate-input" type="password" placeholder="合言葉" autocomplete="off"
+           onkeydown="if(event.key==='Enter')submitGate()">
+    <button class="btn btn-primary" style="margin-top:14px" onclick="submitGate()">入る</button>
+    <div id="gate-err" class="hidden">合言葉が違います。もう一度お試しください。</div>
+  </div>
+</div>
+
+<div class="wrap" id="app-wrap" style="display:none">
   <div class="offer">
     <span class="lim">6/16〜 3日間限定</span>
     <span class="price"><s>通常 ¥22,000</s><em>→ 無料配布</em></span>
@@ -193,7 +273,7 @@
   <section id="screen-start">
     <span class="badge">プレ企画 第3弾 ｜ 無料配布</span>
     <h1>なぜあなたは今、<br><span class="hl">稼げていない</span>のか？<br>50問でわかる、note収益化診断</h1>
-    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今いちばん詰まっている場所＝<b>稼げていない理由</b>を、ひとつに絞って言い当てます。<br><b>何回noteを書いても変わらないのは、才能ではなく“一次情報”が薄いから。</b>AIも、あなたの中にしかない素材がなければ書けません。</p>
+    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今一番詰まっている場所＝<b>稼げていない理由</b>を、一つに絞って言い当てます。<br><b>何回noteを書いても変わらないのは、才能ではなく“一次情報”が薄いから。</b>AIも、あなたの中にしかない素材がなければ書けません。</p>
 
     <div class="card">
       <strong>まず、あなたの発信ジャンルは？</strong>
@@ -204,17 +284,19 @@
 
     <div class="card">
       <strong>この診断でわかること</strong>
-      <p class="note-small" style="margin-top:8px">① 8領域の収益化スコア（100点満点）<br>② あなたの最大のボトルネック＝なぜ今、稼げていないのか<br>③ そのまま使える処方箋<br>④【特典】どんなジャンルでも刺さるnoteの素材＝<b>一次情報＆アバター</b>を引き出す抽出エンジン</p>
+      <p class="note-small" style="margin-top:8px">① 8領域の収益化スコア（100点満点）<br>② あなたの最大のボトルネック＝なぜ今、稼げていないのか<br>③ そのまま使える処方箋<br>④ どんなジャンルでも刺さるnoteの素材＝<b>一次情報＆アバター</b>を引き出す抽出エンジン</p>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="startQuiz()">診断をはじめる（約3分）</button>
       </div>
-      <div class="privacy"><span class="dot"></span>入力はすべてこの端末の中だけで処理され、どこにも送信されません</div>
+      <div class="privacy"><span class="dot"></span>キーボード入力はこの端末の中だけで処理され、外部に送信されません</div>
+      <div class="privacy" style="margin-top:6px;align-items:flex-start;text-align:left"><span class="dot" style="background:var(--warn);margin-top:6px"></span><span>ただし「声で話す」機能を使うときだけは、音声を文字に変換するためにブラウザの仕組みを通じて外部（Google等）で処理されます。気になる場合はキーボード入力をお使いください。</span></div>
     </div>
     <footer>note収益化 セルフ診断ツール ｜ 50問診断 + 一次情報・アバター抽出エンジン</footer>
   </section>
 
   <!-- ====== QUIZ ====== -->
   <section id="screen-quiz" class="hidden">
+    <div class="resumebar"><button onclick="copyResumeUrl(this)">🔗 続きから再開できるURLをコピー</button></div>
     <div class="qmeta"><span id="q-count"></span><span id="q-percent"></span></div>
     <div class="prog"><i id="q-bar"></i></div>
     <div class="card">
@@ -259,27 +341,45 @@
       <div id="r-report"></div>
     </div>
 
+    <div class="nextstep">
+      <span class="ns-label">ステップ１ 結果を保存</span>
+      <div class="ns-title">まず、<b>診断結果を保存</b></div>
+      <div class="ns-sub">あとで見返す・SNSでシェアするときに使えます（画像 または PDF）。</div>
+      <div class="ns-arrow">↓</div>
+    </div>
     <div class="btn-row">
-      <button class="btn btn-purple" onclick="goPart2()">【特典】一次情報＆アバターを引き出す →</button>
+      <button class="btn btn-ghost" id="r-save-img" onclick="saveResultImage(this)">🖼 結果を画像で保存</button>
+      <button class="btn btn-ghost" id="r-save-pdf" onclick="saveResultPdf(this)">📄 PDFで保存</button>
+    </div>
+
+    <div class="nextstep">
+      <span class="ns-label">ステップ２ 一次情報を入力</span>
+      <div class="ns-title">次は、あなたの<b>一次情報</b>を入力</div>
+      <div class="ns-sub">弱点が分かった今がチャンス。あなたにしか書けないnoteの素材を、ここから引き出します。</div>
+      <div class="ns-arrow">↓</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-purple" onclick="goPart2()">一次情報＆アバターを引き出す →</button>
       <button class="btn btn-ghost" onclick="restart()">もう一度診断する</button>
     </div>
   </section>
 
   <!-- ====== PART 2 ====== -->
   <section id="screen-part2" class="hidden">
-    <span class="badge">特典 ｜ 一次情報 → note生成プロンプト</span>
+    <span class="badge">一次情報 → note生成プロンプト</span>
     <div id="p2-genre-tag" class="genre-tag hidden"></div>
     <h1 style="font-size:22px">思い出を<span class="hl">ぶっ込む</span>だけ。<br>あとはAIが、note素材に整えます</h1>
     <p class="lead"><b>AI×note自動化でいちばんの“骨”は、自動化そのものではありません。</b>あなたにしか持っていない一次情報（実体験）を、先に出し切って“まとめる”こと。ここさえ出し切れれば、あとは付け足してAIに設定するだけで、noteは形になります。だから今は、きれいにまとめなくてOK。順番もバラバラでOK。思い出せることを<b>声でぜんぶ話す</b>か書きなぐるだけ。あなたの言葉から、整理済みの<b>一次情報＆アバター</b>と<b>note生成プロンプト</b>を取り出します。空欄が多くても大丈夫。</p>
 
     <!-- 丸投げ（メイン） -->
     <div class="card">
-      <span class="genre-tag" style="background:var(--orange-soft);color:var(--orange)">STEP 1 ｜ ぶっ込む（丸投げ）</span>
+      <span class="genre-tag" style="background:var(--orange-soft);color:var(--orange)">手順１ ｜ 一気だし（丸投げ）</span>
       <p class="note-small" style="margin-top:8px">下の「話すネタ」を見ながら、思いつくまま話す／書く。<b>15分かけてOK</b>。まとめようとせず、エピソード・感情・数字・セリフを、そのまま吐き出してください。整理はあとでAIがやります。</p>
       <div class="voicebar">
         <button class="btn btn-purple" id="dump-mic-btn" onclick="toggleDumpMic()">🎤 声でぜんぶ話す</button>
         <span class="note-small">話した言葉が、そのまま下の欄に入ります</span>
       </div>
+      <p class="note-small" style="margin-top:6px;color:var(--warn)">⚠ 声で話す機能は、音声を文字に変換するため外部（Google等）で処理されます。気になる内容はキーボードで入力してください。</p>
       <div id="p2-voice-unsupported" class="rx hidden"><p>このブラウザは音声入力に未対応です。<b>Google Chrome（PC・Android）</b>でひらくと声で入力できます。キーボードでの書きなぐりはそのまま使えます。</p></div>
       <details class="michelp"><summary>🎤 マイクが反応しない／許可のオンの仕方がわからない</summary>
         <div class="michelp-body">
@@ -304,6 +404,7 @@
           <button class="btn btn-purple" onclick="guideStart()">🎤 声で順番に答える</button>
           <span class="note-small">各欄の🎤でも個別に話せます</span>
         </div>
+        <p class="note-small" style="color:var(--warn)">⚠ 音声は文字変換のため外部（Google等）で処理されます。</p>
         <div class="card qcard" id="p2-form"></div>
       </div>
     </details>
@@ -334,8 +435,12 @@
       <textarea id="p2-trace-result" placeholder="抽出した型・パワーワードをここに貼る（空欄でもOK）"></textarea>
     </div>
 
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="buildOutputs()">丸投げを整理して、note生成プロンプトを出力する →</button>
+    <div class="card">
+      <span class="genre-tag" style="background:var(--orange-soft);color:var(--orange)">手順２ ｜ 整理する（出力）</span>
+      <p class="note-small" style="margin-top:8px">手順１で一気だしできたら、このボタンを押すだけ。AIが整理して、あなた専用の<b>note生成プロンプト</b>を作ります。（競合リサーチ・型抽出は任意なので、なくてもOK）</p>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-primary" onclick="buildOutputs()">一気だしを整理して、note生成プロンプトを出力する →</button>
+      </div>
     </div>
 
     <div id="p2-output" class="hidden">
@@ -378,14 +483,19 @@
       <div class="cta">
         <h2>この続き＝AI×note自動化の全体像は<br>教材で公開します</h2>
         <p>8つのテーマを40分の動画で解説。診断で見えた弱点を、最短で埋めていく具体ステップ。<br><b>6/20</b> 公開／参加者には<b>先行価格</b>でご案内します。</p>
-        <a href="#" id="cta-link">受け取り口はこちら（プロフリンク）</a>
-        <div class="small">※リンクは差し替え箇所です（教材URL / プロフィールリンク）</div>
+        <span class="cta-soon">受け取り口は 6/20 に公開します</span>
+        <!-- ▼6/20の有効化手順：すぐ上の <span class="cta-soon"> の行を消して、
+             下の1行のコメントを外す（前後の <!-- と --> を削除する）だけ。
+             飛び先＝ミッチーのXプロフィール（プロフ設定は6/20に行うため、それまでは下を有効化しない）。 -->
+        <!-- <a href="https://x.com/1617mici" id="cta-link" target="_blank" rel="noopener">受け取り口はこちら（プロフリンク）</a> -->
+        <!-- 固定ポストに変える場合：上の href を、その固定ポストのURLに差し替える。 -->
+        <div class="small">※受け取り口は 6/20 公開。当日にミッチーのXプロフィール（https://x.com/1617mici）のリンクへ差し替えます</div>
       </div>
       <div class="btn-row">
         <button class="btn btn-ghost" onclick="backToResult()">← 診断結果にもどる</button>
       </div>
     </div>
-    <footer>入力内容はこの端末内のみで処理され、送信・保存されません</footer>
+    <footer>キーボード入力はこの端末内のみで処理され、外部に送信されません（声で話す機能のみ、音声が文字変換のため外部で処理されます）</footer>
   </section>
 
   <!-- voice guide bar -->
@@ -398,7 +508,37 @@
   </div>
 </div>
 
+<!-- 画像／PDF保存用ライブラリ（CDNから読み込み。画像化はすべてクライアント側で行い、ユーザーデータは外部送信しません） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+/* ===== access gate (簡易パスワード) =====
+   注意：これは簡易的な仕切りであり、強固な保護ではありません。
+   合言葉はソースを見れば分かってしまうため、本当に秘匿するなら StatiCrypt 等での暗号化を検討してください。 */
+const ACCESS_PASSWORD = "ichi";
+const GATE_FLAG = "shindan_gate_passed";
+
+function openApp(){
+  const ov = document.getElementById("gate-overlay");
+  if(ov) ov.remove();
+  document.getElementById("app-wrap").style.display = "";
+  initApp();
+}
+function submitGate(){
+  const v = (document.getElementById("gate-input").value||"").trim();
+  if(v === ACCESS_PASSWORD){
+    try{ sessionStorage.setItem(GATE_FLAG, "1"); }catch(e){}
+    openApp();
+  } else {
+    document.getElementById("gate-err").classList.remove("hidden");
+    document.getElementById("gate-input").value = "";
+    document.getElementById("gate-input").focus();
+  }
+}
+try{
+  if(sessionStorage.getItem(GATE_FLAG) === "1"){ window.addEventListener("DOMContentLoaded", openApp); }
+}catch(e){}
+
 /* ===== 50 questions across 8 domains ===== */
 const DOMAINS = [
   {key:"concept", name:"コンセプト設計"},
@@ -582,8 +722,61 @@ let bottleneckKey = null;
 let totalScore = 0;
 let genre = "";
 const answers = new Array(QUESTIONS.length).fill(null);
+let quizInProgress = false;           // 1問以上回答済み〜結果表示前なら true（離脱ガード用）
+let lastScores = [];                  // [{key,name,pct}] 結果画像の出力に使う
+let lastStrength = null;              // {name,pct}
 
 const $ = id => document.getElementById(id);
+
+/* ===== 途中保存（URLハッシュ）=====
+   ハッシュに入れるのは「ジャンル」と「各設問のA/B/C/D回答(0-3)」だけ。
+   特典ページの自由入力（体験談・競合情報など）は絶対にハッシュへ入れない。 */
+function encodeState(){
+  // 50文字：回答済みは 0-3、未回答は '-'
+  const a = answers.map(v => v==null ? "-" : String(v)).join("");
+  const g = encodeURIComponent(genre || "");
+  return "g=" + g + "&a=" + a;
+}
+function saveState(){
+  // history を汚さず、リロードで復元できるようハッシュだけ書き換える
+  try{ history.replaceState(null, "", "#" + encodeState()); }catch(e){}
+}
+function clearState(){
+  try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+}
+function loadState(){
+  const h = (location.hash || "").replace(/^#/, "");
+  if(!h) return false;
+  const params = new URLSearchParams(h);
+  const a = params.get("a");
+  if(a == null) return false;
+  const g = params.get("g");
+  if(g) genre = decodeURIComponent(g);
+  let any = false;
+  for(let i=0;i<QUESTIONS.length && i<a.length;i++){
+    const c = a[i];
+    if(c>="0" && c<="3"){ answers[i] = Number(c); any = true; }
+  }
+  if(!any) return false;
+  if(genre && $("genre-input")) $("genre-input").value = genre;
+  const firstNull = answers.findIndex(v => v==null);
+  if(firstNull === -1){
+    computeResult();          // 全問回答済み → 結果を再表示
+  } else {
+    idx = firstNull;          // 続きの設問から再開
+    quizInProgress = true;
+    renderQuestion();
+    show("screen-quiz");
+  }
+  return true;
+}
+function copyResumeUrl(btn){
+  saveState();
+  navigator.clipboard.writeText(location.href).then(()=>{
+    const o = btn.textContent; btn.textContent = "URLをコピーしました ✓";
+    setTimeout(()=>btn.textContent = o, 1800);
+  }).catch(()=>{ alert("コピーできませんでした。アドレスバーのURLを手動でコピーしてください。"); });
+}
 function show(sec){
   ["screen-start","screen-quiz","screen-result","screen-part2"].forEach(s=>$(s).classList.add("hidden"));
   $(sec).classList.remove("hidden");
@@ -609,7 +802,7 @@ function renderGenreChips(){
 
 function startQuiz(){
   genre = ($("genre-input").value||"").trim();
-  idx=0; renderQuestion(); show("screen-quiz");
+  idx=0; saveState(); renderQuestion(); show("screen-quiz");
 }
 
 function domainName(key){ return DOMAINS.find(d=>d.key===key).name; }
@@ -628,14 +821,28 @@ function renderQuestion(){
     const b = document.createElement("button");
     b.className = "opt";
     b.innerHTML = `<b>${["A","B","C","D"][i]}</b>${o.label}`;
-    b.onclick = ()=>answer(o.val);
+    // すでに回答済みの設問（戻ってきた場合）は選択状態を表示
+    if(answers[idx] === o.val) b.classList.add("sel");
+    b.onclick = ()=>pickOption(b, o.val);
     box.appendChild(b);
   });
   $("q-back").classList.toggle("hidden", idx===0);
 }
 
+let picking = false;
+function pickOption(btn, val){
+  if(picking) return;            // 連打で2問飛ぶのを防ぐ
+  picking = true;
+  // まず選択した選択肢に色を付ける（誤タップに気づける猶予）
+  [...btn.parentNode.children].forEach(el => el.classList.remove("sel"));
+  btn.classList.add("sel");
+  setTimeout(()=>{ picking = false; answer(val); }, 300);
+}
+
 function answer(val){
   answers[idx] = val;
+  quizInProgress = true;        // 1問でも答えたら離脱ガード有効
+  saveState();
   if(idx < QUESTIONS.length-1){ idx++; renderQuestion(); }
   else { computeResult(); }
 }
@@ -656,11 +863,14 @@ function computeResult(){
   const total = Math.round(answers.reduce((s,v)=>s+(v??0),0) / (QUESTIONS.length*3) * 100);
   totalScore = total;
   $("r-score").textContent = total;
+  lastScores = scores;
+  quizInProgress = false;       // 結果に到達したら離脱ガード解除（リロードしても結果が復元される）
 
   // lowest domain = bottleneck, highest = strength
   let low = scores[0], high = scores[0];
   scores.forEach(s=>{ if(s.pct < low.pct) low = s; if(s.pct > high.pct) high = s; });
   bottleneckKey = low.key;
+  lastStrength = {name:high.name, pct:high.pct};
   const info = DOMAIN_INFO[low.key];
   $("r-verdict-title").innerHTML = `あなたのボトルネックは<br><em>「${info.verdict}」</em>こと`;
   $("r-verdict-body").textContent = info.why;
@@ -701,7 +911,7 @@ function computeResult(){
   show("screen-result");
 }
 
-function restart(){ for(let i=0;i<answers.length;i++)answers[i]=null; idx=0; show("screen-start"); }
+function restart(){ for(let i=0;i<answers.length;i++)answers[i]=null; idx=0; quizInProgress=false; clearState(); show("screen-start"); }
 
 /* ===== part 2 ===== */
 function buildForm(){
@@ -846,7 +1056,117 @@ function guideStop(){
   $("guidebar").classList.add("hidden");
 }
 
-renderGenreChips();
+/* ===== 結果の画像／PDF保存 =====
+   html2canvas で結果カードをクライアント側だけで画像化。ユーザーデータは外部送信しない。 */
+function buildShareCard(){
+  const node = document.createElement("div");
+  node.id = "share-card";
+  const barsHtml = lastScores.map(s=>{
+    const b = band(s.pct);
+    const color = b==="high" ? "#16A34A" : b==="mid" ? "#F59E0B" : "#EF4444";
+    const isLow = bottleneckKey && s.key===bottleneckKey;
+    return `<div style="margin:10px 0">
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;margin-bottom:5px">
+        <span>${s.name}${isLow?' <span style="font-size:11px;color:#fff;background:#EF4444;padding:1px 8px;border-radius:99px">最重要</span>':''}</span>
+        <span style="color:#6B6477">${s.pct}%</span>
+      </div>
+      <div style="height:12px;border-radius:99px;background:#EAE6F0;overflow:hidden">
+        <div style="height:100%;width:${s.pct}%;background:${color};border-radius:99px"></div>
+      </div>
+    </div>`;
+  }).join("");
+  const info = bottleneckKey ? DOMAIN_INFO[bottleneckKey] : null;
+  const verdict = info ? info.verdict : "";
+  const strengthLine = lastStrength ? `あなたの武器：${lastStrength.name}（${lastStrength.pct}%）` : "";
+  const genreLine = genre ? `<div style="font-size:13px;font-weight:700;color:#7C3AED;background:#EDE4FF;display:inline-block;padding:5px 12px;border-radius:99px;margin-bottom:12px">ジャンル：${genre}</div>` : "";
+  node.innerHTML = `
+    <div style="height:6px;border-radius:99px;background:linear-gradient(90deg,#FF7A1A,#7C3AED);margin-bottom:18px"></div>
+    <div style="font-size:13px;font-weight:700;letter-spacing:.08em;color:#7C3AED">note収益化 50問診断</div>
+    ${genreLine ? '<div style="margin-top:10px">'+genreLine+'</div>' : ''}
+    <div style="background:#fff;border:1px solid #EAE6F0;border-radius:18px;padding:22px;margin-top:12px;text-align:center">
+      <div style="font-size:60px;font-weight:900;line-height:1;background:linear-gradient(90deg,#FF7A1A,#7C3AED);-webkit-background-clip:text;background-clip:text;color:transparent">${totalScore}<span style="font-size:22px">/100</span></div>
+      <div style="font-size:13px;color:#6B6477;margin-top:4px">note収益化スコア</div>
+    </div>
+    <div style="background:linear-gradient(135deg,#2A1736,#3A1E4D);color:#fff;border-radius:18px;padding:20px;margin-top:14px">
+      <div style="font-size:12px;font-weight:700;color:#FFB37A;letter-spacing:.06em">＝ あなたの最大のボトルネック</div>
+      <div style="font-size:20px;font-weight:900;margin-top:6px;color:#FF9A4D">「${verdict}」</div>
+      ${strengthLine ? '<div style="font-size:13px;color:#16A34A;margin-top:10px;font-weight:700">'+strengthLine+'</div>' : ''}
+    </div>
+    <div style="background:#fff;border:1px solid #EAE6F0;border-radius:18px;padding:20px;margin-top:14px">
+      <div style="font-size:15px;font-weight:900;margin-bottom:6px">8領域スコア</div>
+      ${barsHtml}
+    </div>
+    <div style="text-align:center;font-size:12px;color:#6B6477;margin-top:16px">なぜ今、稼げていないのか？ ｜ note収益化 50問セルフ診断</div>
+  `;
+  return node;
+}
+function renderResultCanvas(){
+  const node = buildShareCard();
+  document.body.appendChild(node);
+  return html2canvas(node, {scale:2, backgroundColor:"#FBF9FF", useCORS:true})
+    .then(canvas=>{ node.remove(); return canvas; })
+    .catch(err=>{ node.remove(); throw err; });
+}
+function withBusy(btn, fn){
+  if(!btn) return fn();
+  const o = btn.textContent; btn.textContent = "作成中…"; btn.disabled = true;
+  return Promise.resolve().then(fn).catch(err=>{
+    alert("保存に失敗しました。通信環境（ライブラリの読み込み）をご確認ください。");
+    console.error(err);
+  }).finally(()=>{ btn.textContent = o; btn.disabled = false; });
+}
+function saveResultImage(btn){
+  withBusy(btn, ()=> renderResultCanvas().then(canvas=>{
+    const a = document.createElement("a");
+    a.download = "note収益化診断_結果.png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  }));
+}
+function saveResultPdf(btn){
+  withBusy(btn, ()=> renderResultCanvas().then(canvas=>{
+    const { jsPDF } = window.jspdf;
+    const img = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({orientation:"p", unit:"pt", format:"a4"});
+    const pw = pdf.internal.pageSize.getWidth();
+    const ph = pdf.internal.pageSize.getHeight();
+    const margin = 24;
+    const w = pw - margin*2;
+    const h = canvas.height * (w / canvas.width);
+    let y = margin, remaining = h;
+    // 縦長の画像はページ分割
+    if(h <= ph - margin*2){
+      pdf.addImage(img, "PNG", margin, y, w, h);
+    } else {
+      let sy = 0;
+      const pageImgH = ph - margin*2;
+      const ratio = canvas.width / w;
+      const sliceH = pageImgH * ratio;
+      while(sy < canvas.height){
+        const c = document.createElement("canvas");
+        c.width = canvas.width;
+        c.height = Math.min(sliceH, canvas.height - sy);
+        c.getContext("2d").drawImage(canvas, 0, sy, canvas.width, c.height, 0, 0, canvas.width, c.height);
+        const slice = c.toDataURL("image/png");
+        if(sy > 0) pdf.addPage();
+        pdf.addImage(slice, "PNG", margin, margin, w, c.height / ratio);
+        sy += sliceH;
+      }
+    }
+    pdf.save("note収益化診断_結果.pdf");
+  }));
+}
+
+/* ===== 初期化 ===== */
+function initApp(){
+  renderGenreChips();
+  // 途中保存のハッシュがあれば復元（なければトップを表示）
+  if(!loadState()) show("screen-start");
+}
+// 診断の途中（1問以上回答済み〜結果表示前）に限り、離脱を警告
+window.addEventListener("beforeunload", (e)=>{
+  if(quizInProgress){ e.preventDefault(); e.returnValue = ""; }
+});
 
 function buildCompetitorPrompt(){
   const raw = ($("p2-rivals").value||"").trim();
