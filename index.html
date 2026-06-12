@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  note収益化 50問診断アプリ（静的・単一HTML / GitHub Pages配布）
+  note収益化 30問診断アプリ（静的・単一HTML / GitHub Pages配布）
   方針：ユーザー入力を外部に送信しない。すべてクライアント側で完結。
         （例外：「声で話す」音声入力のみ、ブラウザのWeb Speech APIが文字変換で外部を使う）
 
@@ -16,13 +16,13 @@
     2) ブラウザで http://localhost:8766/micchi_shindan_app.html を開く
     3) 合言葉ゲート：誤った文字→「違います」、"ichi"→本体表示
        （同一セッション中は再入力不要。別タブ/再起動で再度要求）
-    4) ジャンル選択 → 「診断をはじめる」→ 50問を通す
+    4) ジャンル選択 → 「診断をはじめる」→ 30問を通す（10問×3ページ、ページ間にチェックポイント）
        ・選択肢タップで色が付き、約0.3秒後に自動で次へ進む
        ・「🔗 続きから再開できるURLをコピー」でURLを控える
     5) 途中（数問回答した状態）でリロード → 続きの設問から復元されることを確認
        ・コピーしたURLを別タブで開いても同様に復元
        ・途中でタブを閉じようとすると離脱警告が出る（結果表示後・トップでは出ない）
-    6) 50問完了 → 結果表示 →「🖼 結果を画像で保存」でPNG、「📄 PDFで保存」でPDFが落ちる
+    6) 30問完了 → 結果表示 →「🖼 結果を画像で保存」でPNG、「📄 PDFで保存」でPDFが落ちる
        ・保存物はスコア／ボトルネック／8領域が見えるSNS向けレイアウト
     7) リロードすると結果が復元される（全問回答済みのため）
 
@@ -34,7 +34,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なぜあなたは今、稼げていないのか？ ｜ note収益化 50問診断</title>
+<title>なぜあなたは今、稼げていないのか？ ｜ note収益化診断</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -119,6 +119,18 @@
   .track{height:12px;border-radius:99px;background:var(--line);overflow:hidden}
   .track>i{display:block;height:100%;border-radius:99px;transition:width .6s ease}
   .lowmark{font-size:11px;font-weight:700;color:#fff;background:var(--bad);padding:1px 7px;border-radius:99px;margin-left:6px}
+  /* ===== checkpoint (page-clear interim analysis) ===== */
+  .cp-hero{text-align:center;padding:6px 0 2px}
+  .cp-emoji{font-size:42px;line-height:1}
+  .cp-title{font-size:21px;font-weight:900;margin:10px 0 4px}
+  .cp-sub{font-size:13.5px;color:var(--gray)}
+  .cp-dots{display:flex;justify-content:center;gap:8px;margin:14px 0 4px}
+  .cp-dots i{width:12px;height:12px;border-radius:99px;background:var(--line)}
+  .cp-dots i.done{background:linear-gradient(90deg,var(--orange),var(--purple))}
+  .newmark{font-size:10.5px;font-weight:700;color:#fff;background:var(--purple);padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:middle}
+  .cp-pending{font-size:12.5px;color:var(--gray);margin-top:12px}
+  .cp-insight{font-size:13.5px;line-height:1.75;margin-top:8px}
+  .cp-tease{font-size:13px;color:var(--purple);font-weight:700;margin-top:14px;text-align:center}
 
   .rx{border-left:4px solid var(--orange);background:#FFF7F1;border-radius:10px;padding:14px 16px;margin-top:12px}
   .rx h3{font-size:14px;color:var(--orange)}
@@ -272,8 +284,8 @@
   <!-- ====== START ====== -->
   <section id="screen-start">
     <span class="badge">プレ企画 第3弾 ｜ 無料配布</span>
-    <h1>なぜあなたは今、<br><span class="hl">稼げていない</span>のか？<br>50問でわかる、note収益化診断</h1>
-    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。50問に答えると、あなたが今一番詰まっている場所＝<b>稼げていない理由</b>を、一つに絞って言い当てます。<br><b>何回noteを書いても変わらないのは、才能ではなく“一次情報”が薄いから。</b>AIも、あなたの中にしかない素材がなければ書けません。</p>
+    <h1>なぜあなたは今、<br><span class="hl">稼げていない</span>のか？<br>8領域でわかる、note収益化診断</h1>
+    <p class="lead">AI×note自動化で結果を出す人と、出ない人。差は「才能」じゃありません。<b>8つの領域</b>のどこが抜けているか、それだけです。サクサク答えられる質問に4択で答えていくと、あなたが今一番詰まっている場所＝<b>稼げていない理由</b>を、一つに絞って言い当てます。<br><b>何回noteを書いても変わらないのは、才能ではなく“一次情報”が薄いから。</b>AIも、あなたの中にしかない素材がなければ書けません。</p>
 
     <div class="card">
       <strong>まず、あなたの発信ジャンルは？</strong>
@@ -286,12 +298,12 @@
       <strong>この診断でわかること</strong>
       <p class="note-small" style="margin-top:8px">① 8領域の収益化スコア（100点満点）<br>② あなたの最大のボトルネック＝なぜ今、稼げていないのか<br>③ そのまま使える処方箋<br>④ どんなジャンルでも刺さるnoteの素材＝<b>一次情報＆アバター</b>を引き出す抽出エンジン</p>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="startQuiz()">診断をはじめる（約3分）</button>
+        <button class="btn btn-primary" onclick="startQuiz()">診断をはじめる（約2分）</button>
       </div>
       <div class="privacy"><span class="dot"></span>キーボード入力はこの端末の中だけで処理され、外部に送信されません</div>
       <div class="privacy" style="margin-top:6px;align-items:flex-start;text-align:left"><span class="dot" style="background:var(--warn);margin-top:6px"></span><span>ただし「声で話す」機能を使うときだけは、音声を文字に変換するためにブラウザの仕組みを通じて外部（Google等）で処理されます。気になる場合はキーボード入力をお使いください。</span></div>
     </div>
-    <footer>note収益化 セルフ診断ツール ｜ 50問診断 + 一次情報・アバター抽出エンジン</footer>
+    <footer>note収益化 セルフ診断ツール ｜ 8領域診断 + 一次情報・アバター抽出エンジン</footer>
   </section>
 
   <!-- ====== QUIZ ====== -->
@@ -304,6 +316,33 @@
       <div class="qtext" id="q-text"></div>
       <div id="q-options"></div>
       <a class="backlink hidden" id="q-back" onclick="prevQuestion()">← 前の質問にもどる</a>
+    </div>
+  </section>
+
+  <!-- ====== CHECKPOINT (page-clear interim analysis) ====== -->
+  <section id="screen-checkpoint" class="hidden">
+    <div class="resumebar"><button onclick="copyResumeUrl(this)">🔗 続きから再開できるURLをコピー</button></div>
+    <div class="card">
+      <div class="cp-hero">
+        <div class="cp-emoji">🎉</div>
+        <div class="cp-title" id="cp-title"></div>
+        <div class="cp-sub" id="cp-sub"></div>
+        <div class="cp-dots" id="cp-dots"></div>
+      </div>
+    </div>
+    <div class="card">
+      <strong>ここまでの中間分析</strong>
+      <p class="note-small" style="margin-top:6px">回答が出そろった領域から、順次スコアを確定しています。</p>
+      <div class="bars" id="cp-bars"></div>
+      <div class="cp-pending" id="cp-pending"></div>
+    </div>
+    <div class="card" id="cp-insight-card">
+      <strong>いま見えていること</strong>
+      <div class="cp-insight" id="cp-insight"></div>
+    </div>
+    <div class="cp-tease" id="cp-tease"></div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-primary" id="cp-next" onclick="continueQuiz()"></button>
     </div>
   </section>
 
@@ -552,63 +591,44 @@ const DOMAINS = [
 ];
 
 const QUESTIONS = [
-  // concept (7)
+  // 30問構成：4問×6領域＋3問×2領域。各領域の verdict/why/step（DOMAIN_INFO）に直結する設問だけを残す
+  // concept (4)
   {d:"concept", t:"自分のnoteが「誰の、どんな悩みを解決するか」を一文で言える"},
   {d:"concept", t:"競合と違う、自分だけの切り口を持っている"},
   {d:"concept", t:"「最終的にこれを売る」と決めた商品やテーマがある"},
   {d:"concept", t:"ターゲット読者の顔が、具体的に思い浮かぶ"},
-  {d:"concept", t:"発信が最終的にどこ（収益）につながるか、導線を設計できている"},
-  {d:"concept", t:"「なぜ自分がこれを語るのか」の理由を説明できる"},
-  {d:"concept", t:"発信ジャンルを一つに絞れている"},
-  // primary (6)
+  // primary (4)
   {d:"primary", t:"自分の体験を、具体的なエピソードで語れる"},
   {d:"primary", t:"失敗談を隠さず、正直に出せる"},
   {d:"primary", t:"自分の数字や実績を、具体的に示せる"},
-  {d:"primary", t:"ビフォー（過去）とアフター（今）の変化を語れる"},
-  {d:"primary", t:"借り物の知識ではなく、自分の言葉で書いている"},
   {d:"primary", t:"読者が「あなたにしか書けない」と感じる話を持っている"},
-  // brand (6)
+  // brand (4)
   {d:"brand", t:"プロフィールを見ただけで、何の人か一瞬で分かる"},
   {d:"brand", t:"アイコン・ヘッダー・世界観に統一感がある"},
   {d:"brand", t:"自分のキャラや口調が、発信全体で一貫している"},
   {d:"brand", t:"「この人といえばこれ」という代名詞・肩書きがある"},
-  {d:"brand", t:"発信内容に、ぶれない一貫したテーマがある"},
-  {d:"brand", t:"読者に名前や顔を覚えてもらえている実感がある"},
-  // writing (6)
+  // writing (4)
   {d:"writing", t:"最初の3行で、読者の心を掴める"},
   {d:"writing", t:"一文を短く、リズムよく書けている"},
-  {d:"writing", t:"読者の感情を動かす表現ができる"},
   {d:"writing", t:"結論から先に書けている"},
-  {d:"writing", t:"比喩や具体例で、難しいことを分かりやすくできる"},
   {d:"writing", t:"最後まで読ませる文章構成を作れる"},
-  // fan (6)
+  // fan (4)
   {d:"fan", t:"コメントやDMに、丁寧に返している"},
-  {d:"fan", t:"読者と双方向のやり取りが生まれている"},
   {d:"fan", t:"「また読みたい」と思わせる発信ができている"},
   {d:"fan", t:"自分を応援してくれる固定の読者がいる"},
-  {d:"fan", t:"読者が今かかえている悩みを把握している"},
   {d:"fan", t:"無料でも、出し惜しみせず価値を出し切れている"},
-  // ai (7)
-  {d:"ai", t:"AIを使って、発信を効率化できている"},
+  // ai (4)
   {d:"ai", t:"投稿の型・テンプレートを持っている"},
-  {d:"ai", t:"ネタ出しをAIに任せられる"},
   {d:"ai", t:"文章の下書きをAIで作れる"},
   {d:"ai", t:"発信作業をルーティン化できている"},
   {d:"ai", t:"AIに自分の文体・トーンを学習させている"},
-  {d:"ai", t:"手作業の時間を減らす仕組みを持っている"},
-  // funnel (6)
+  // funnel (3)
   {d:"funnel", t:"Xなど他SNSから、noteへ読者を誘導できている"},
   {d:"funnel", t:"無料記事から有料商品への導線がある"},
   {d:"funnel", t:"プロフィールに、次の行動へのリンクがある"},
-  {d:"funnel", t:"無理なく、定期的に投稿できている"},
-  {d:"funnel", t:"拡散されやすい投稿の型を持っている"},
-  {d:"funnel", t:"新規読者が、継続的に増えている"},
-  // sales (6)
-  {d:"sales", t:"商品の魅力を、自分の言葉で伝えられる"},
+  // sales (3)
   {d:"sales", t:"読者の悩みを、本人以上に言語化できる"},
   {d:"sales", t:"買うと何がどう変わるか（ベネフィット）を具体的に示せる"},
-  {d:"sales", t:"価格の根拠を、納得感をもって説明できる"},
-  {d:"sales", t:"行動を促すCTA（呼びかけ）を書ける"},
   {d:"sales", t:"売り込み感を出さず、自然に販売できる"},
 ];
 
@@ -716,6 +736,10 @@ const NOTE_FOCUS = {
 
 const GENRE_PRESETS = ["復縁・恋愛","婚活","副業・ビジネス","子育て・育児","健康・ダイエット","美容","自己啓発・マインド","投資・お金","HSP・繊細さん","スピリチュアル"];
 
+/* ===== paging（質問数の総量を見せず、ページ単位で進捗を見せる）===== */
+const PAGE_SIZE = 10;
+const PAGE_COUNT = Math.ceil(QUESTIONS.length / PAGE_SIZE);
+
 /* ===== state ===== */
 let idx = 0;
 let bottleneckKey = null;
@@ -732,7 +756,7 @@ const $ = id => document.getElementById(id);
    ハッシュに入れるのは「ジャンル」と「各設問のA/B/C/D回答(0-3)」だけ。
    特典ページの自由入力（体験談・競合情報など）は絶対にハッシュへ入れない。 */
 function encodeState(){
-  // 50文字：回答済みは 0-3、未回答は '-'
+  // 設問数ぶんの文字列：回答済みは 0-3、未回答は '-'
   const a = answers.map(v => v==null ? "-" : String(v)).join("");
   const g = encodeURIComponent(genre || "");
   return "g=" + g + "&a=" + a;
@@ -778,7 +802,7 @@ function copyResumeUrl(btn){
   }).catch(()=>{ alert("コピーできませんでした。アドレスバーのURLを手動でコピーしてください。"); });
 }
 function show(sec){
-  ["screen-start","screen-quiz","screen-result","screen-part2"].forEach(s=>$(s).classList.add("hidden"));
+  ["screen-start","screen-quiz","screen-checkpoint","screen-result","screen-part2"].forEach(s=>$(s).classList.add("hidden"));
   $(sec).classList.remove("hidden");
   window.scrollTo({top:0,behavior:"smooth"});
 }
@@ -809,9 +833,13 @@ function domainName(key){ return DOMAINS.find(d=>d.key===key).name; }
 
 function renderQuestion(){
   const q = QUESTIONS[idx];
-  $("q-count").textContent = `Q${idx+1} / ${QUESTIONS.length}`;
-  const pct = Math.round((idx)/QUESTIONS.length*100);
-  $("q-percent").textContent = `${pct}%`;
+  // 総問数は出さない。「いまのページの中の位置」と「残りページ数」だけ見せる
+  const page = Math.floor(idx / PAGE_SIZE) + 1;
+  const qInPage = (idx % PAGE_SIZE) + 1;
+  const remaining = PAGE_COUNT - page;
+  $("q-count").textContent = `ページ${page} ・ Q${qInPage} / ${PAGE_SIZE}`;
+  $("q-percent").textContent = remaining > 0 ? `あと${remaining}ページ` : "ラストページ";
+  const pct = Math.round((idx % PAGE_SIZE)/PAGE_SIZE*100);
   $("q-bar").style.width = pct+"%";
   $("q-domain").textContent = "領域：" + domainName(q.d);
   $("q-text").textContent = q.t;
@@ -843,10 +871,87 @@ function answer(val){
   answers[idx] = val;
   quizInProgress = true;        // 1問でも答えたら離脱ガード有効
   saveState();
-  if(idx < QUESTIONS.length-1){ idx++; renderQuestion(); }
-  else { computeResult(); }
+  if(idx === QUESTIONS.length-1){ computeResult(); return; }
+  // ページの最後の1問に答えたら、中間分析（チェックポイント）を挟む
+  if((idx+1) % PAGE_SIZE === 0){ renderCheckpoint(); show("screen-checkpoint"); return; }
+  idx++; renderQuestion();
 }
+function continueQuiz(){ idx++; renderQuestion(); show("screen-quiz"); }
 function prevQuestion(){ if(idx>0){ idx--; renderQuestion(); } }
+
+/* ===== checkpoint：ページクリアごとの中間分析（細かい報酬で離脱を防ぐ）===== */
+function provisionalScores(uptoIdx){
+  const agg = {};
+  DOMAINS.forEach(d=>agg[d.key]={sum:0,answered:0,total:0});
+  QUESTIONS.forEach((q,i)=>{
+    agg[q.d].total++;
+    if(i<=uptoIdx && answers[i]!=null){ agg[q.d].sum += answers[i]; agg[q.d].answered++; }
+  });
+  return DOMAINS.map(d=>{
+    const a = agg[d.key];
+    return {key:d.key, name:d.name, done:a.answered===a.total,
+            pct: a.answered ? Math.round(a.sum/(a.answered*3)*100) : 0};
+  });
+}
+const CP_TITLES = {
+  1:"いいスタート！ もう3分の1クリア",
+  2:"折り返し突破！ 残すはラストページだけ",
+};
+function renderCheckpoint(){
+  const page = Math.floor(idx / PAGE_SIZE) + 1;   // いま終えたページ
+  const remaining = PAGE_COUNT - page;
+  const scores = provisionalScores(idx);
+  const prevDone = new Set(provisionalScores(idx - PAGE_SIZE).filter(s=>s.done).map(s=>s.key));
+  const confirmed = scores.filter(s=>s.done);
+  const pending = scores.filter(s=>!s.done);
+
+  $("cp-title").textContent = CP_TITLES[page] || "ページクリア！";
+  $("cp-sub").textContent = `ページ${page}が終わりました。8領域のうち${confirmed.length}領域のスコアが確定。`;
+
+  // ページ進捗ドット
+  const dots = $("cp-dots"); dots.innerHTML="";
+  for(let i=0;i<PAGE_COUNT;i++){
+    const d = document.createElement("i");
+    if(i < page) d.className = "done";
+    dots.appendChild(d);
+  }
+
+  // 確定済み領域のバー（今回確定した領域に NEW）
+  const bars = $("cp-bars"); bars.innerHTML="";
+  confirmed.forEach(s=>{
+    const b = band(s.pct);
+    const color = b==="high" ? "var(--good)" : b==="mid" ? "var(--warn)" : "var(--bad)";
+    const isNew = !prevDone.has(s.key);
+    const el = document.createElement("div");
+    el.className="bar";
+    el.innerHTML = `<div class="top"><span>${s.name}${isNew?'<span class="newmark">NEW</span>':''}</span><span class="pct">${s.pct}%</span></div>
+      <div class="track"><i style="width:0;background:${color}"></i></div>`;
+    bars.appendChild(el);
+    requestAnimationFrame(()=>{ el.querySelector("i").style.width = s.pct+"%"; });
+  });
+  $("cp-pending").textContent = pending.length
+    ? "解析中：" + pending.map(s=>s.name).join("・")
+    : "";
+
+  // 中間インサイト：確定領域の中の暫定の武器と注意サイン
+  let html = "";
+  if(confirmed.length >= 2){
+    let low = confirmed[0], high = confirmed[0];
+    confirmed.forEach(s=>{ if(s.pct < low.pct) low = s; if(s.pct > high.pct) high = s; });
+    if(high.key !== low.key && high.pct !== low.pct){
+      html += `現時点の暫定の武器は<b>「${high.name}」（${high.pct}%）</b>。一方、注意サインが出ているのは<b>「${low.name}」（${low.pct}%）</b>。<br>`;
+    }
+    html += DOMAIN_INFO[low.key].bands[band(low.pct)];
+  } else if(confirmed.length === 1){
+    const s = confirmed[0];
+    html = `まず<b>「${s.name}」（${s.pct}%）</b>が確定。${DOMAIN_INFO[s.key].bands[band(s.pct)]}`;
+  }
+  $("cp-insight-card").classList.toggle("hidden", !html);
+  $("cp-insight").innerHTML = html;
+
+  $("cp-tease").textContent = `残り${remaining}ページで8領域がすべて出そろい、「なぜ今、稼げていないのか」を1つに断定します。`;
+  $("cp-next").textContent = remaining===1 ? `ラストページへ（あと${PAGE_SIZE}問）` : `つづきへ（あと${remaining}ページ）`;
+}
 
 function computeResult(){
   // per domain
@@ -1081,7 +1186,7 @@ function buildShareCard(){
   const genreLine = genre ? `<div style="font-size:13px;font-weight:700;color:#7C3AED;background:#EDE4FF;display:inline-block;padding:5px 12px;border-radius:99px;margin-bottom:12px">ジャンル：${genre}</div>` : "";
   node.innerHTML = `
     <div style="height:6px;border-radius:99px;background:linear-gradient(90deg,#FF7A1A,#7C3AED);margin-bottom:18px"></div>
-    <div style="font-size:13px;font-weight:700;letter-spacing:.08em;color:#7C3AED">note収益化 50問診断</div>
+    <div style="font-size:13px;font-weight:700;letter-spacing:.08em;color:#7C3AED">note収益化 30問診断</div>
     ${genreLine ? '<div style="margin-top:10px">'+genreLine+'</div>' : ''}
     <div style="background:#fff;border:1px solid #EAE6F0;border-radius:18px;padding:22px;margin-top:12px;text-align:center">
       <div style="font-size:60px;font-weight:900;line-height:1;background:linear-gradient(90deg,#FF7A1A,#7C3AED);-webkit-background-clip:text;background-clip:text;color:transparent">${totalScore}<span style="font-size:22px">/100</span></div>
@@ -1096,7 +1201,7 @@ function buildShareCard(){
       <div style="font-size:15px;font-weight:900;margin-bottom:6px">8領域スコア</div>
       ${barsHtml}
     </div>
-    <div style="text-align:center;font-size:12px;color:#6B6477;margin-top:16px">なぜ今、稼げていないのか？ ｜ note収益化 50問セルフ診断</div>
+    <div style="text-align:center;font-size:12px;color:#6B6477;margin-top:16px">なぜ今、稼げていないのか？ ｜ note収益化 30問セルフ診断</div>
   `;
   return node;
 }
